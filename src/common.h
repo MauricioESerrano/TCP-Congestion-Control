@@ -109,8 +109,10 @@ struct __attribute__((packed)) Frame_t {
     uint16_t remaining_msg_bytes; 
     uint8_t dst_id; 
     uint8_t src_id; 
-    uint8_t seq_num; 
-
+    uint8_t seq_num;
+    // ! Added -----------------------------------------------------------------
+    uint8_t crc_val;
+    // ! -----------------------------------------------------------------------
     char data[FRAME_PAYLOAD_SIZE]; 
 };
 typedef struct Frame_t Frame; 

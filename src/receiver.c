@@ -12,16 +12,31 @@ void handle_incoming_frames(Host* host) {
     //       and print the final message when all frames belonging to a message have been received.
     //    6) Implement the cumulative acknowledgement part of the sliding window protocol
     //    7) Append acknowledgement frames to the outgoing_frames_head queue
+
     int incoming_frames_length = ll_get_length(host->incoming_frames_head);
     while (incoming_frames_length > 0) {
         // Pop a node off the front of the link list and update the count
-        LLnode* ll_inmsg_node = ll_pop_node(&host->incoming_frames_head);
+        
+        LLnode* ll_inmsg_node = ll_pop_node(&host->incoming_frames_head); 
         incoming_frames_length = ll_get_length(host->incoming_frames_head);
+        Frame* inframe = ll_inmsg_node->value;
 
-        Frame* inframe = ll_inmsg_node->value; 
+        // ! added \/ ----------------------------------------------------------
+        // int currSequenceNumber = inframe->seq_num;
 
-        printf("<RECV_%d>:[%s]\n", host->id, inframe->data);
+        // char* frameToChar = convert_frame_to_char(inframe);
+        // int computeCRC = compute_crc8(frameToChar);
+        
+        // if (computeCRC != 0) {
+        //     printf("Data corrupted in handle incoming frames. \n");
+        //     continue;
+        // }
+        // else {
 
+            printf("<RECV_%d>:[%s]\n", host->id, inframe->data);
+        // }
+        // ! -------------------------------------------------------------------
+        
         free(inframe);
         free(ll_inmsg_node);
     }
