@@ -3,13 +3,32 @@
 #include "switch.h"
 
 struct timeval* host_get_next_expiring_timeval(Host* host) {
+
     // TODO: You should fill in this function so that it returns the 
     // timeval when next timeout should occur
     // 
     // 1) Check your send_window for the timeouts of the frames. 
     // 2) Return the timeout of a single frame. 
-    // HINT: It's not the frame with the furtherst/latest timeout. 
-    return NULL;
+    // HINT: It's not the frame with the furtherst/latest timeout.
+
+    // ! added \/ --------------------------------------------------------------
+
+    struct timeval* earliestTimeout = NULL;
+     for (int i = 0; i < glb_sysconfig.window_size; i++) {
+        if (host->send_window[i].timeout != NULL) {
+            struct timeval* currentTimeout = host->send_window[i].timeout;
+            if (currentTimeout == NULL) {
+                earliestTimeout = currentTimeout;
+            }
+            else if (timeval_usecdiff(currentTimeout, earliestTimeout) > 0) {
+                earliestTimeout = currentTimeout;
+            }
+        }
+    }
+    
+    return earliestTimeout;
+
+    // ! -----------------------------------------------------------------------
 }
 
 void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
@@ -28,6 +47,34 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
     //    3) Check if the ack is valid i.e. within the window slot 
     //    4) Implement logic as per sliding window protocol to track ACK for what frame is expected,
     //       and what to do when ACK for expected frame is received
+
+    // ! added \/ --------------------------------------------------------------
+    
+    uint8_t incomingFrameCRC_Calculation = 0;
+    LLnode* currNodeHead = ll_pop_node(&host->incoming_frames_head);
+    Frame* currNodeToFrame = currNodeHead->value;
+
+    int incomingFramesHeadLength = ll_get_length(&host->incoming_frames_head);
+
+    for (int i = 0; i < glb_sysconfig.window_size && incomingFramesHeadLength > 0; i++) {
+        
+         if (currNodeToFrame != NULL) {
+            char* frameToChar = convert_frame_to_char(currNodeToFrame);
+            incomingFrameCRC_Calculation = compute_crc8(frameToChar);
+            
+            if (incomingFrameCRC_Calculation != 0) {
+                printf("data is corrupted in handle incoming acks");
+                continue;
+            }
+        }
+        else {
+
+            //! Point 4 here.
+            
+            }
+            
+        }
+    // ! -----------------------------------------------------------------------
 
     if (host->id == glb_sysconfig.host_send_cc_id) {
         fprintf(cc_diagnostics,"%d,%d,%d,",host->round_trip_num, num_acks_received[glb_sysconfig.host_recv_cc_id], num_dup_acks_for_this_rtt[glb_sysconfig.host_recv_cc_id]); 
@@ -51,9 +98,10 @@ void handle_input_cmds(Host* host, struct timeval curr_timeval) {
         // Cast to Cmd type and free up the memory for the node
         Cmd* outgoing_cmd = (Cmd*) ll_input_cmd_node->value;
         free(ll_input_cmd_node);
- 
+
         int msg_length = strlen(outgoing_cmd->message) + 1; // +1 to account for null terminator 
         if (msg_length > FRAME_PAYLOAD_SIZE) {
+            // NOTES: FRAGMENTATION LOGIC HERE
             // Do something about messages that exceed the frame size
             printf(
                 "<SEND_%d>: sending messages of length greater than %d is not "
@@ -79,6 +127,15 @@ void handle_timedout_frames(Host* host, struct timeval curr_timeval) {
     // TODO: Detect frames that have timed out
     // Check your send_window for the frames that have timed out and set send_window[i]->timeout = NULL
     // You will re-send the actual frames and set the timeout in handle_outgoing_frames()
+    for (int i = 0; i < glb_sysconfig.window_size; i++) {
+
+        if (host->send_window[i].timeout != NULL) {
+            struct timeval* ithFrame = host->send_window[i].timeout;
+            if (timeval_usecdiff(ithFrame, &curr_timeval) <= 0) {
+                host->send_window[i].timeout = NULL;
+            }
+        }
+    }
 }
 
 void handle_outgoing_frames(Host* host, struct timeval curr_timeval) {
@@ -91,7 +148,9 @@ void handle_outgoing_frames(Host* host, struct timeval curr_timeval) {
 
     //TODO: Send out the frames that have timed out(i.e. timeout = NULL)
     for (int i = 0; i < glb_sysconfig.window_size; i++) {
-
+        if (host->send_window[i].timeout == NULL && host->send_window[i].frame != NULL) {
+            ll_append_node(&host->buffered_outframes_head, &host->send_window[i].frame);
+        }
     }
 
     //TODO: The code is incomplete and needs to be changed to have a correct behavior
@@ -103,19 +162,25 @@ void handle_outgoing_frames(Host* host, struct timeval curr_timeval) {
         if (host->send_window[i].frame == NULL) {
             LLnode* ll_outframe_node = ll_pop_node(&host->buffered_outframes_head);
             Frame* outgoing_frame = ll_outframe_node->value; 
-
+            
             ll_append_node(&host->outgoing_frames_head, outgoing_frame); 
             
+
             //Set a timeout for this frame
             //NOTE: Each dataframe(not ack frame) that is appended to the 
             //host->outgoing_frames_head has to have a 10ms offset from 
             //the previous frame to enable selective retransmission mechanism. 
             //Already implemented below
+
             struct timeval* next_timeout = malloc(sizeof(struct timeval));
             memcpy(next_timeout, &curr_timeval, sizeof(struct timeval)); 
             timeval_usecplus(next_timeout, TIMEOUT_INTERVAL_USEC + additional_ts);
             additional_ts += 10000; //ADD ADDITIONAL 10ms
 
+            host->send_window[i].frame = outgoing_frame;
+
+            // ! this is not working!
+            // host->send_window[i].timeout = next_timeout;
             free(ll_outframe_node);
         }
     }

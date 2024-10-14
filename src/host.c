@@ -15,7 +15,8 @@ void init_host(Host* host, int id) {
     host->incoming_frames_head = NULL; 
     host->buffered_outframes_head = NULL; 
     host->outgoing_frames_head = NULL; 
-    host->send_window = calloc(glb_sysconfig.window_size, sizeof(struct send_window_slot)); 
+    host->send_window = calloc(glb_sysconfig.window_size, sizeof(struct send_window_slot));
+
     for (int i = 0; i < glb_sysconfig.window_size; i++) {
         host->send_window[i].frame = NULL;
         host->send_window[i].timeout = NULL;
@@ -24,7 +25,6 @@ void init_host(Host* host, int id) {
     gettimeofday(host->latest_timeout, NULL);
 
     // TODO: You should fill in this function as necessary to initialize variables
-
 
     // *********** PA1b ONLY ***********
     host->cc = calloc(glb_num_hosts, sizeof(CongestionControl));
