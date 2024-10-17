@@ -3,6 +3,7 @@
 #include "receiver.h"
 #include "switch.h"
 #include <assert.h>
+#include "common.h"
 
 void init_host(Host* host, int id) {
     host->id = id;
@@ -10,9 +11,8 @@ void init_host(Host* host, int id) {
     host->awaiting_ack = 0; 
     host->round_trip_num = 0; 
     host->csv_out = 0;
-    // ! added.
-    host->LFR = -1;
-
+    host->seqNum = 0;
+    
     host->input_cmdlist_head = NULL;
     host->incoming_frames_head = NULL; 
     host->buffered_outframes_head = NULL; 
@@ -27,7 +27,17 @@ void init_host(Host* host, int id) {
     host->latest_timeout = malloc(sizeof(struct timeval));
     gettimeofday(host->latest_timeout, NULL);
 
+    host->recieverStructure = calloc(glb_num_hosts, sizeof(RecieverState));
+    for (int i = 0; i < glb_num_hosts; i++) {
+        host->recieverStructure[i].LFR = -1;
+        host->recieverStructure[i].messageBuffer = NULL;
+    }
+
+    host->queue = createMinQueue();
+
     // TODO: You should fill in this function as necessary to initialize variables
+    // ! added.
+
 
     // *********** PA1b ONLY ***********
     host->cc = calloc(glb_num_hosts, sizeof(CongestionControl));

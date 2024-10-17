@@ -2,125 +2,122 @@
 #include <assert.h>
 #include "switch.h"
 
-
-void handle_incoming_frames(Host* host) {
-
-    int incoming_frames_length = ll_get_length(host->incoming_frames_head);
-    char* messageBuffer = malloc(incoming_frames_length * FRAME_PAYLOAD_SIZE);
-    int messageBufferOffset = 0;
-    int currPayloadSize = 0;
-
-    while (incoming_frames_length > 0) {
-
-        // printf("Reciever Debug 1 \n");
-        LLnode* ll_inmsg_node = ll_pop_node(&host->incoming_frames_head); 
-        incoming_frames_length = ll_get_length(host->incoming_frames_head);
-        if (ll_inmsg_node == NULL) {
-            continue;
-        }
-
-        Frame* inframe = ll_inmsg_node->value;
-
-        char* frameToChar = convert_frame_to_char(inframe);
-        uint8_t computeCRC = compute_crc8(frameToChar);
-
-        if (computeCRC != 0) {
-            ll_destroy_node(ll_inmsg_node);
-            printf("Data corrupted in current incoming frame.\n");
-            continue;
-        }
-
-        // printf("Reciever Debug 2 \n");
-        
-        // printf("RECIEVER inframe seqNum = %d \n", inframe->seq_num);
-        // printf("RECIEVER host LFR = %d \n", host->LFR);
-        
-        if (inframe->seq_num >= (host->LFR + 1) % MAX_SEQ_NUM) {   
-            // printf("Reciever Debug 3 \n");         
-            host->LFR = inframe->seq_num;
-
-            if (inframe->remaining_msg_bytes + strlen(inframe->data) > FRAME_PAYLOAD_SIZE) {
-                currPayloadSize = FRAME_PAYLOAD_SIZE;
-            }
-            else {
-                currPayloadSize = strlen(inframe->data);
-            }
-
-            memcpy(messageBuffer + messageBufferOffset, inframe->data, currPayloadSize);
-            messageBufferOffset += currPayloadSize;
-            
-            // printf("Reciever Debug 4 \n");
-            if (inframe->remaining_msg_bytes == 0) {
-                // printf("Reciever Debug 4.5 \n");
-                messageBuffer[messageBufferOffset] = '\0';
-                printf("<RECV_%d>:[%s]\n", host->id, messageBuffer);
-                free(messageBuffer);
-                messageBuffer = NULL;
-                // needed???
-                messageBufferOffset = 0;
-                host->LFR = -1;
-            }
-
-            // printf("Reciever Debug 5 \n");
-            Frame* ackFrame = malloc(sizeof(Frame));
-            assert(ackFrame);
-            ackFrame->src_id = inframe->dst_id;
-            ackFrame->dst_id = inframe->src_id;
-            ackFrame->seq_num = inframe->seq_num;
-            // printf("Reciever Debug 5.1 \n");
-            ackFrame->crc_val = 0;
-            char* ackFrametoChar = convert_frame_to_char(ackFrame);
-            ackFrame->crc_val = compute_crc8(ackFrametoChar);
-            // printf("Reciever Debug 5.2 \n");
-
-            Frame* ackFrameCopy = malloc(sizeof(Frame));
-            assert(ackFrameCopy);
-            memcpy(ackFrameCopy, ackFrame, sizeof(Frame));
-
-            ll_append_node(&host->outgoing_frames_head, ackFrameCopy);
-            // printf("Reciever Debug 5.3 \n");
-            // printf("Reciever Debug 5.4 \n");
-            free(ackFrametoChar);
-            // printf("Reciever Debug 5.5 \n");
-            free(ackFrame);
-            // printf("Reciever Debug 6 \n");
-        }
-
-        free(frameToChar);
-        free(inframe);
-        free(ll_inmsg_node);
-
-        // printf("RECIEVER-Incoming_FrameLength = %d \n", incoming_frames_length);
-        // printf("Reciever Debug 7 \n");
-    }
+// Send ack to sender when called upon.
+void send_ack(Host* host, int ack_num, Frame* frame) {
+    Frame* ackFrame = malloc(sizeof(Frame));
+    assert(ackFrame);
+    ackFrame->src_id = frame->dst_id;
+    ackFrame->dst_id = frame->src_id;
+    ackFrame->seq_num = ack_num;
+    ackFrame->crc_val = 0;
+    char* ackFrameToChar = convert_frame_to_char(ackFrame);
+    ackFrame->crc_val = compute_crc8(ackFrameToChar);
+    ll_append_node(&host->outgoing_frames_head, ackFrame);
+    free(ackFrameToChar);
 }
 
 
-// void handle_incoming_frames(Host* host) {
-//     // TODO: Suggested steps for handling incoming frames
-//     //    1) Dequeue the Frame from the host->incoming_frames_head
-//     //    2) Compute CRC of incoming frame to know whether it is corrupted
-//     //    3) If frame is corrupted, drop it and move on.
-//     //    4) Implement logic to check if the expected frame has come
-//     //    5) Implement logic to combine payload received from all frames belonging to a message
-//     //       and print the final message when all frames belonging to a message have been received.
-//     //    6) Implement the cumulative acknowledgement part of the sliding window protocol
-//     //    7) Append acknowledgement frames to the outgoing_frames_head queue
-//     int incoming_frames_length = ll_get_length(host->incoming_frames_head);
-//     while (incoming_frames_length > 0) {
-//         // Pop a node off the front of the link list and update the count
-//         LLnode* ll_inmsg_node = ll_pop_node(&host->incoming_frames_head);
-//         incoming_frames_length = ll_get_length(host->incoming_frames_head);
+void handle_incoming_frames(Host* host) {
+    
+    int incoming_frames_length = ll_get_length(host->incoming_frames_head);
+    int toCreate = incoming_frames_length;
+    
+    // While therea are still frames in queue
+    while (incoming_frames_length > 0) {
 
-//         Frame* inframe = ll_inmsg_node->value; 
+        LLnode* poppedNode = ll_pop_node(&host->incoming_frames_head);
+        incoming_frames_length = ll_get_length(host->incoming_frames_head);
 
-//         printf("<RECV_%d>:[%s]\n", host->id, inframe->data);
+        if (poppedNode == NULL) {
+            continue;
+        }
 
-//         free(inframe);
-//         free(ll_inmsg_node);
-//     }
-// }
+        // Convert poppedNode to Frame
+        Frame* poppedFrame = poppedNode->value;
+        // Compute CRC
+        char* poppedFrameToChar = convert_frame_to_char(poppedFrame);
+        uint8_t computeCRC = compute_crc8(poppedFrameToChar);
 
+        // Use CRC and Check for Corruption, if poppedFrame corrupted, Destroy and continue to next iteration in incoming frames head.
+        if (computeCRC != 0) {
+            // ! Here \/ needed null?
+            // poppedFrame = NULL;
+            printf("Data corrupted in incoming frame %d.\n", poppedFrame->seq_num);
+            ll_destroy_node(poppedNode);
+            continue;
+        } 
+
+        // If poppedNode/poppedFrame is NOT corrupted, enter here.
+        else {
+
+            uint8_t seq_num = poppedFrame->seq_num;
+            int senderSrcId = poppedFrame->src_id;
+            RecieverState* reciever = &host->recieverStructure[senderSrcId];
+            
+            // Check if the poppedFrameNode is within window, if not, drop the frame.
+            // last frame received < current frame number <= last frame received + window_size
+            // ! initalize && if frame does not already exist in FrameArray i.e. not already processed
+            if (reciever->LFR < seq_num && seq_num <= reciever->LFR + glb_sysconfig.window_size)  {
+
+                /*
+                Node* current = host->queue->front;
+                int found = 0;
+
+                while (current != NULL) {
+                    if (current->seqNum == poppedFrame->seq_num) {
+                        printf("Found the node with value: %d\n", poppedFrame->seq_num);
+                        send_ack(host, reciever->LFR, poppedFrame);
+                        found = 1;
+                        break;
+                    }
+                    current = current->next;
+                }
+
+                */
+
+                enqueue(host->queue, poppedFrame->seq_num, poppedFrame);
+
+                Node* minNode = getMin(host->queue);
+                
+                while ( !isEmpty(host->queue) && (reciever->LFR + 1) % 256 <= minNode->seqNum /* && found == 0*/ ) {
+                    
+                    Node* NodeFromQueue = popMin(host->queue);
+                    Frame* FrameFromMinQueue = NodeFromQueue->frame;
+
+                    if (reciever->messageBuffer == NULL) {
+                        reciever->messageBuffer = malloc(FRAME_PAYLOAD_SIZE * toCreate );
+                        reciever->messageBuffer[0] = '\0';
+                    }
+
+                    strcat(reciever->messageBuffer, FrameFromMinQueue->data);
+
+                    if (FrameFromMinQueue->remaining_msg_bytes == 0) {
+                        printf("<RECV_%d>:[%s]\n", host->id, reciever->messageBuffer);
+                        reciever->messageBuffer = NULL;
+                    }
+
+                    // Advance LFR
+                    reciever->LFR = (reciever->LFR + 1) % 256;
+
+
+                    free(FrameFromMinQueue);
+                    FrameFromMinQueue = NULL;
+                }
+
+                // Send a cumulative acl for the last frame processed
+                send_ack(host, reciever->LFR, poppedFrame);
+            }
+
+            // if not within window, drop the frame.
+            else {
+                // printf("Frame %d is outside the window \n", poppedFrame->seq_num);
+                send_ack(host, reciever->LFR, poppedFrame);
+            }
+        }
+
+        free(poppedFrameToChar);
+    }
+}
 
 void run_receivers() {
     int recv_order[glb_num_hosts]; 
