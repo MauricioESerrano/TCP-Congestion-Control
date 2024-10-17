@@ -123,6 +123,37 @@ struct send_window_slot {
     struct timeval* timeout;
 }; 
 
+// typedef struct {
+//     uint8_t expected_seq_num;
+//     char* messageBuffer;
+//     uint8_t LFR;
+//     int messageBufferOffset;
+
+// } ReceiverState;
+
+typedef struct {
+
+    char* messageBuffer;
+    int LFR;
+    
+
+} RecieverState;
+
+// ! -------------------------------------------------------------
+typedef struct Node {
+    uint8_t seqNum;
+    Frame* frame;
+    struct Node* next;
+} Node;
+
+typedef struct MinQueue {
+    Node* front;
+    Node* rear;
+    Node* minNode; 
+} MinQueue;
+// ! ---------------------------------------------------------------
+
+
 // PA1b ONLY
 struct CongestionControl_t {
     double cwnd;
@@ -150,7 +181,7 @@ struct Host_t {
     int active;  
     int round_trip_num; 
     int csv_out;
-    int LFR;
+    uint8_t seqNum;
 
     LLnode* input_cmdlist_head;
     LLnode* incoming_frames_head; 
@@ -158,13 +189,16 @@ struct Host_t {
     LLnode* buffered_outframes_head; 
     LLnode* outgoing_frames_head;
 
+    // struct ReceiverState* receiverStates;
+    RecieverState* recieverStructure;
     struct send_window_slot* send_window;
-    struct send_window_slot* recieve_window;
-    struct timeval* latest_timeout; 
-
+    struct timeval* latest_timeout;
+    struct MinQueue* queue;
+    
     CongestionControl* cc; //PA1b ONLY
 };
 typedef struct Host_t Host;
+
 /*
 Global variables declared below.
 DO NOT CHANGE:

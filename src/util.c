@@ -1,5 +1,138 @@
 #include "util.h"
 
+// create a new node with a Frame and seqNum
+Node* createNode(uint8_t seqNum, Frame* frame) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    if (!newNode) {
+        perror("Failed to allocate memory for new node");
+        exit(EXIT_FAILURE);
+    }
+    newNode->seqNum = seqNum;
+    newNode->frame = frame;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// create a new MinQueue
+MinQueue* createMinQueue() {
+    MinQueue* queue = (MinQueue*)malloc(sizeof(MinQueue));
+    if (!queue) {
+        perror("Failed to allocate memory for MinQueue");
+        exit(EXIT_FAILURE);
+    }
+    queue->front = queue->rear = NULL;
+    queue->minNode = NULL;
+    return queue;
+}
+
+
+// check if the queue is empty
+int isEmpty(MinQueue* queue) {
+    return queue->front == NULL;
+}
+
+// enqueue an element
+void enqueue(MinQueue* queue, uint8_t seqNum, Frame* frame) {
+    
+    Node* newNode = createNode(seqNum, frame);
+    if (isEmpty(queue)) {
+        queue->front = queue->rear = newNode;
+        queue->minNode = newNode;
+    } else {
+        queue->rear->next = newNode;
+        queue->rear = newNode;
+
+        if (seqNum < queue->minNode->seqNum) {
+            queue->minNode = newNode;
+        }
+    }
+}
+
+// dequeue an element
+Node* dequeue(MinQueue* queue) {
+    if (isEmpty(queue)) {
+        printf("Queue is empty\n");
+        return NULL;
+    }
+    Node* temp = queue->front;
+    queue->front = queue->front->next;
+    if (temp == queue->minNode) {
+        Node* current = queue->front;
+        queue->minNode = current;
+        while (current) {
+            if (current->seqNum < queue->minNode->seqNum) {
+                queue->minNode = current;
+            }
+            current = current->next;
+        }
+    }
+    return temp; 
+}
+
+// get the minimum element
+Node* getMin(MinQueue* queue) {
+    if (isEmpty(queue)) {
+        printf("Queue is empty\n");
+        return NULL;
+    }
+    return queue->minNode;
+}
+
+// dequeue the minimum element (smallest seqNum)
+Node* popMin(MinQueue* queue) {
+    if (isEmpty(queue)) {
+        printf("Queue is empty\n");
+        return NULL;
+    }
+
+    Node* minNode = queue->minNode;
+    Node* current = queue->front;
+    Node* prev = NULL;
+    
+    while (current && current != minNode) {
+        prev = current;
+        current = current->next;
+    }
+
+    if (prev) {
+        prev->next = minNode->next;
+    } else {
+        queue->front = minNode->next;
+    }
+
+    if (queue->rear == minNode) {
+        queue->rear = prev;
+    }
+
+    queue->minNode = queue->front;
+    current = queue->front;
+    while (current) {
+        if (current->seqNum < queue->minNode->seqNum) {
+            queue->minNode = current;
+        }
+        current = current->next;
+    }
+
+    return minNode;
+}
+
+
+void freeMinQueue(MinQueue* queue) {
+    while (!isEmpty(queue)) {
+        Node* node = dequeue(queue);
+        free(node);
+    }
+    free(queue);
+}
+
+void freeNode(Node* node) {
+    if (node) {
+        free(node);
+    }
+}
+
+// ! ---------------------------------------------------------------------------
+
 // Linked list functions
 int ll_get_length(LLnode* head) {
     LLnode* tmp;
