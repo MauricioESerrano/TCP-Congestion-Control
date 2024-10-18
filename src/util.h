@@ -21,7 +21,8 @@ void enqueue(MinQueue* queue, uint8_t seqNum, Frame* frame);
 Node* dequeue(MinQueue* queue);
 Node* getMin(MinQueue* queue);
 Node* popMin(MinQueue* queue);
-void freeMinQueue(MinQueue* queue);
+void clearMinQueue(MinQueue* queue);
+void freeAndClearMinQueue(MinQueue* queue);
 void freeNode(Node* node);
 
 

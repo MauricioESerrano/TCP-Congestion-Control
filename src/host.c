@@ -29,6 +29,8 @@ void init_host(Host* host, int id) {
 
     host->recieverStructure = calloc(glb_num_hosts, sizeof(RecieverState));
     for (int i = 0; i < glb_num_hosts; i++) {
+        host->recieverStructure[i].LAR = -1;
+        host->recieverStructure[i].seqNum = 0;
         host->recieverStructure[i].LFR = -1;
         host->recieverStructure[i].messageBuffer = NULL;
     }

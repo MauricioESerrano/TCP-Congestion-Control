@@ -24,6 +24,7 @@ void handle_incoming_frames(Host* host) {
     
     // While therea are still frames in queue
     while (incoming_frames_length > 0) {
+        // printf("incoming frames length = %d \n", incoming_frames_length);
 
         LLnode* poppedNode = ll_pop_node(&host->incoming_frames_head);
         incoming_frames_length = ll_get_length(host->incoming_frames_head);
@@ -37,6 +38,7 @@ void handle_incoming_frames(Host* host) {
         // Compute CRC
         char* poppedFrameToChar = convert_frame_to_char(poppedFrame);
         uint8_t computeCRC = compute_crc8(poppedFrameToChar);
+        free(poppedFrameToChar);
 
         // Use CRC and Check for Corruption, if poppedFrame corrupted, Destroy and continue to next iteration in incoming frames head.
         if (computeCRC != 0) {
@@ -85,6 +87,7 @@ void handle_incoming_frames(Host* host) {
                     Frame* FrameFromMinQueue = NodeFromQueue->frame;
 
                     if (reciever->messageBuffer == NULL) {
+                        // bruteforce method would be initalize this in host.c with value of 65535
                         reciever->messageBuffer = malloc(FRAME_PAYLOAD_SIZE * toCreate );
                         reciever->messageBuffer[0] = '\0';
                     }
@@ -97,10 +100,13 @@ void handle_incoming_frames(Host* host) {
                     }
 
                     // Advance LFR
-                    reciever->LFR = (reciever->LFR + 1) % 256;
+                    // reciever->LFR = (reciever->LFR + 1) % 256;
+                    reciever->LFR = FrameFromMinQueue->seq_num;
 
 
                     free(FrameFromMinQueue);
+                    // ! added this, is it ok?
+                    clearMinQueue(host->queue);
                     FrameFromMinQueue = NULL;
                 }
 
@@ -114,8 +120,6 @@ void handle_incoming_frames(Host* host) {
                 send_ack(host, reciever->LFR, poppedFrame);
             }
         }
-
-        free(poppedFrameToChar);
     }
 }
 

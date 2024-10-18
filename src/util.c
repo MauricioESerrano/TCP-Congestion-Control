@@ -117,7 +117,14 @@ Node* popMin(MinQueue* queue) {
 }
 
 
-void freeMinQueue(MinQueue* queue) {
+void clearMinQueue(MinQueue* queue) {
+    while (!isEmpty(queue)) {
+        Node* node = dequeue(queue);
+        free(node);
+    }
+}
+
+void freeAndClearMinQueue(MinQueue* queue) {
     while (!isEmpty(queue)) {
         Node* node = dequeue(queue);
         free(node);

@@ -123,20 +123,14 @@ struct send_window_slot {
     struct timeval* timeout;
 }; 
 
-// typedef struct {
-//     uint8_t expected_seq_num;
-//     char* messageBuffer;
-//     uint8_t LFR;
-//     int messageBufferOffset;
-
-// } ReceiverState;
 
 typedef struct {
 
     char* messageBuffer;
+    uint8_t seqNum;
     int LFR;
-    
-
+    // ! uint8 wraparound test cases
+    int LAR;
 } RecieverState;
 
 // ! -------------------------------------------------------------
