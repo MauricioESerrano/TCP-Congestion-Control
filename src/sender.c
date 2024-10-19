@@ -77,15 +77,14 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
             incomingFrameCRC_Calculation = compute_crc8(frameToChar);
         
             if (incomingFrameCRC_Calculation != 0) {
-                printf("data is corrupted for ACK %d\n", currNodeToFrame->seq_num);
+                // printf("SENDER - INCOMING ACKS :data is corrupted for ACK %d\n", currNodeToFrame->seq_num);
                 // ! \/ FINAL - PART 1 test when everything is working if this segfaults or not.
                 // free(currNodeToFrame);
                 ll_destroy_node(currNodeHead);
                 continue;
             }
-            else {
 
-                
+            else {
 
                 int senderSrcId = currNodeToFrame->src_id;
                 RecieverState* reciever = &host->recieverStructure[senderSrcId];
@@ -95,16 +94,16 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
                 uint8_t CurrAckSeq = currNodeToFrame->seq_num;
                 //  int wrapAroundValue = seq_num_diff(expectAck, CurrAckVal);
 
-                printf("SENDER - LAR = %d \n", reciever->LAR);
-                printf("SENDER - Seq = %d \n", CurrAckSeq);
-                printf("--------------------------------------- \n");
+                // printf("SENDER - LAR = %d \n", reciever->LAR);
+                // printf("SENDER - Seq = %d \n", CurrAckSeq);
+                // printf("--------------------------------------- \n");
 
                 if ( seq_num_diff(reciever->LAR , CurrAckSeq) > 0 /*wrapAroundValue >= 0 && wrapAroundValue < glb_sysconfig.window_size*/) {
 
                   //  expectAck = (CurrAckVal + 1) % 256;
                     reciever->LAR = CurrAckSeq;
                     // reciever->expectedAck = expectAck;
-                    printf("SENDER - ACK %d received \n", CurrAckSeq);
+                    // printf("SENDER - ACK %d received \n", CurrAckSeq);
                     num_acks_received[currNodeToFrame->src_id]++;
 
                     ll_destroy_node(currNodeHead);
@@ -273,6 +272,8 @@ void handle_timedout_frames(Host* host, struct timeval curr_timeval) {
     for (int i = 0; i < glb_sysconfig.window_size; i++) {
         // ! added frane \/
         if ( host->send_window[i].frame != NULL && host->send_window[i].timeout != NULL) {
+            // printf("SENDER - HANDLE TIMED OUT : index = %d \n", i);
+            // printf("SENDER - HANDLE TIMED OUT : timedOut seqNum = %d \n", host->send_window[i].frame->seq_num);
             struct timeval* ithFrameTimeout = host->send_window[i].timeout;
             if (timeval_usecdiff(ithFrameTimeout, &curr_timeval) <= 0) {
                 host->send_window[i].timeout = NULL;
@@ -294,6 +295,8 @@ void handle_outgoing_frames(Host* host, struct timeval curr_timeval) {
     for (int i = 0; i < glb_sysconfig.window_size; i++) {
         if (host->send_window[i].timeout == NULL && host->send_window[i].frame != NULL) {
             
+            // printf("SENDER - OUTGOING 2 FRAMES :frame timed out for seq Num = %d \n", host->send_window[i].frame->seq_num);
+
             Frame* outgoingFrame = host->send_window[i].frame;
             Frame* copyOfOutgoingFrame = malloc(sizeof(Frame));
             assert(copyOfOutgoingFrame);
@@ -317,6 +320,7 @@ void handle_outgoing_frames(Host* host, struct timeval curr_timeval) {
     //3) Append the popped frame to the host->outgoing_frames_head
     for (int i = 0; i < glb_sysconfig.window_size && ll_get_length(host->buffered_outframes_head) > 0; i++) {
         if (host->send_window[i].frame == NULL) {
+
             LLnode* ll_outframe_node = ll_pop_node(&host->buffered_outframes_head);
             Frame* outgoing_frame = ll_outframe_node->value;
             Frame* copyOfOutgoingFrame = malloc(sizeof(Frame));
@@ -324,7 +328,6 @@ void handle_outgoing_frames(Host* host, struct timeval curr_timeval) {
             memcpy(copyOfOutgoingFrame, outgoing_frame, sizeof(Frame));
             // copy to outgoing frame change back
             ll_append_node(&host->outgoing_frames_head, copyOfOutgoingFrame); 
-            
 
             //Set a timeout for this frame
             //NOTE: Each dataframe(not ack frame) that is appended to the 
@@ -341,6 +344,7 @@ void handle_outgoing_frames(Host* host, struct timeval curr_timeval) {
 
             host->send_window[i].frame = outgoing_frame;
             host->send_window[i].timeout = next_timeout;
+            // printf("SENDER - OUTGOING 1 FRAMES : pushing out frame seq Num = %d \n", host->send_window[i].frame->seq_num);
             free(ll_outframe_node);
         }
     }
