@@ -65,7 +65,10 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
             break;
         }
 
+        printf("before \n");
         Frame* currNodeToFrame = currNodeHead->value;
+        printf("incomingACK src id = %d \n", currNodeToFrame->src_id);
+        printf("incomingACK dst id = %d \n", currNodeToFrame->dst_id);
 
         if (currNodeToFrame != NULL) {
             // ! PART OF FINAL
@@ -81,6 +84,8 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
                 continue;
             }
             else {
+
+                
 
                 int senderSrcId = currNodeToFrame->src_id;
                 RecieverState* reciever = &host->recieverStructure[senderSrcId];
@@ -144,25 +149,73 @@ void handle_input_cmds(Host* host, struct timeval curr_timeval) {
     int input_cmd_length = ll_get_length(host->input_cmdlist_head);
 
     while (input_cmd_length > 0) {
+
+
+
         
         LLnode* ll_input_cmd_node = ll_pop_node(&host->input_cmdlist_head);
         input_cmd_length = ll_get_length(host->input_cmdlist_head);
-   
+
         Cmd* outgoing_cmd = (Cmd*) ll_input_cmd_node->value; 
         free(ll_input_cmd_node);
  
         int msg_length = strlen(outgoing_cmd->message) + 1;
 
-        if (msg_length > FRAME_PAYLOAD_SIZE) {
-            
+
+
+
+        // if message can fit within 1 frame.
+        if (msg_length < FRAME_PAYLOAD_SIZE) {
+
+            Frame* outgoing_frame = malloc(sizeof(Frame));
+            assert(outgoing_frame);
+
+            strcpy(outgoing_frame->data, outgoing_cmd->message);
+
+            outgoing_frame->src_id = outgoing_cmd->src_id;
+            outgoing_frame->dst_id = outgoing_cmd->dst_id;
+            outgoing_frame->remaining_msg_bytes = 0;
+
+            int senderSrcId = outgoing_frame->src_id;
+            RecieverState* reciever = &host->recieverStructure[senderSrcId];
+
+            outgoing_frame->seq_num = reciever->seqNum;
+            reciever->seqNum = reciever->seqNum + 1;
+
+            outgoing_frame->crc_val = 0;
+            char* frameAsChar = convert_frame_to_char(outgoing_frame);
+            outgoing_frame->crc_val = compute_crc8(frameAsChar);
+
+            ll_append_node(&host->buffered_outframes_head, outgoing_frame);
+
+            free(outgoing_cmd->message);
+            free(outgoing_cmd);
+        } 
+
+
+
+
+
+
+
+
+        
+        // if fragmentation logic i.e. multiple frames needed for 1 message.
+        else {
+
             int fragmentations = (msg_length + (FRAME_PAYLOAD_SIZE - 1)) / FRAME_PAYLOAD_SIZE;
             int offsetsForBytes = 0;
    
+            printf("fragments = %d \n", fragmentations);
+
             for (int i = 0; i < fragmentations; i++) {
+
+                printf("currFrag i = %d \n", i);
     
                 Frame* outgoing_frame = malloc(sizeof(Frame));
                 assert(outgoing_frame);
   
+                // if you are on the last frame 
                 if (i == fragmentations - 1) { 
  
                     int remainingToProcessBytes = msg_length % FRAME_PAYLOAD_SIZE;
@@ -202,34 +255,16 @@ void handle_input_cmds(Host* host, struct timeval curr_timeval) {
 
             free(outgoing_cmd->message);
             free(outgoing_cmd);
-        } 
-        
-        else {
-
-            Frame* outgoing_frame = malloc(sizeof(Frame));
-            assert(outgoing_frame);
-
-            strcpy(outgoing_frame->data, outgoing_cmd->message);
-
-            outgoing_frame->src_id = outgoing_cmd->src_id;
-            outgoing_frame->dst_id = outgoing_cmd->dst_id;
-            outgoing_frame->remaining_msg_bytes = 0;
-
-            int senderSrcId = outgoing_frame->src_id;
-            RecieverState* reciever = &host->recieverStructure[senderSrcId];
-
-            outgoing_frame->seq_num = reciever->seqNum;
-            reciever->seqNum = reciever->seqNum + 1;
-
-            outgoing_frame->crc_val = 0;
-            char* frameAsChar = convert_frame_to_char(outgoing_frame);
-            outgoing_frame->crc_val = compute_crc8(frameAsChar);
-
-            ll_append_node(&host->buffered_outframes_head, outgoing_frame);
-
-            free(outgoing_cmd->message);
-            free(outgoing_cmd);
+           
         }
+
+
+
+
+
+
+
+
     }
 }
 

@@ -4,16 +4,28 @@
 
 // Send ack to sender when called upon.
 void send_ack(Host* host, int ack_num, Frame* frame) {
+    printf("send_ack 1 src id = %d \n", frame->src_id);
+    printf("send_ack 1 dst id = %d \n", frame->dst_id);
     Frame* ackFrame = malloc(sizeof(Frame));
     assert(ackFrame);
-    ackFrame->src_id = frame->dst_id;
-    ackFrame->dst_id = frame->src_id;
+    printf("send_ack 2 src id = %d \n", frame->src_id);
+    printf("send_ack 2 dst id = %d \n", frame->dst_id);
+    uint8_t srcID = frame->dst_id;
+    uint8_t dstID = frame->src_id;
+    ackFrame->src_id = srcID;
+    ackFrame->dst_id = dstID;
+    printf("send_ack 3 src id = %d \n", dstID);
+    printf("send_ack 3 dst id = %d \n", srcID);
+    
     ackFrame->seq_num = ack_num;
     ackFrame->crc_val = 0;
     char* ackFrameToChar = convert_frame_to_char(ackFrame);
     ackFrame->crc_val = compute_crc8(ackFrameToChar);
+    printf("a \n");
     ll_append_node(&host->outgoing_frames_head, ackFrame);
+    printf("b \n");
     free(ackFrameToChar);
+    printf("c \n");
 }
 
 
@@ -45,7 +57,7 @@ void handle_incoming_frames(Host* host) {
             // ! Here \/ needed null?
             // poppedFrame = NULL;
             printf("Data corrupted in incoming frame %d.\n", poppedFrame->seq_num);
-            ll_destroy_node(poppedNode);
+           // ll_destroy_node(poppedNode);
             continue;
         } 
 
@@ -55,6 +67,10 @@ void handle_incoming_frames(Host* host) {
             uint8_t seq_num = poppedFrame->seq_num;
             int senderSrcId = poppedFrame->src_id;
             RecieverState* reciever = &host->recieverStructure[senderSrcId];
+
+            printf("poppedFrame 1 SRC = %d\n", poppedFrame->src_id);
+            printf("poppedFrame 1 DST = %d\n", poppedFrame->dst_id);
+
             
             // Check if the poppedFrameNode is within window, if not, drop the frame.
             // last frame received < current frame number <= last frame received + window_size
@@ -86,38 +102,40 @@ void handle_incoming_frames(Host* host) {
                     Node* NodeFromQueue = popMin(host->queue);
                     Frame* FrameFromMinQueue = NodeFromQueue->frame;
 
-                    if (reciever->messageBuffer == NULL) {
-                        // bruteforce method would be initalize this in host.c with value of 65535
-                        reciever->messageBuffer = malloc(FRAME_PAYLOAD_SIZE * toCreate );
-                        reciever->messageBuffer[0] = '\0';
-                    }
+                    printf("minQueueFrame SRC = %d\n", FrameFromMinQueue->src_id);
+                    printf("minQueueFrame DST = %d\n", FrameFromMinQueue->dst_id);
 
                     strcat(reciever->messageBuffer, FrameFromMinQueue->data);
 
                     if (FrameFromMinQueue->remaining_msg_bytes == 0) {
                         printf("<RECV_%d>:[%s]\n", host->id, reciever->messageBuffer);
-                        reciever->messageBuffer = NULL;
+                        reciever->messageBuffer[0] = '\0';
+                        // ! added this, is it ok?
+                        clearMinQueue(host->queue);
+                        
                     }
 
                     // Advance LFR
                     // reciever->LFR = (reciever->LFR + 1) % 256;
                     reciever->LFR = FrameFromMinQueue->seq_num;
-
-
                     free(FrameFromMinQueue);
-                    // ! added this, is it ok?
-                    clearMinQueue(host->queue);
                     FrameFromMinQueue = NULL;
+                    
                 }
 
                 // Send a cumulative acl for the last frame processed
+
+                printf("poppedFrame 2 SRC = %d\n", poppedFrame->src_id);
+                printf("poppedFrame 2 DST = %d\n", poppedFrame->dst_id);
+
                 send_ack(host, reciever->LFR, poppedFrame);
+                // free(poppedFrame);
             }
 
             // if not within window, drop the frame.
             else {
                 // printf("Frame %d is outside the window \n", poppedFrame->seq_num);
-                send_ack(host, reciever->LFR, poppedFrame);
+                // send_ack(host, reciever->LFR, poppedFrame);
             }
         }
     }

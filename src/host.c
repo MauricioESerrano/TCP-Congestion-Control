@@ -32,7 +32,7 @@ void init_host(Host* host, int id) {
         host->recieverStructure[i].LAR = -1;
         host->recieverStructure[i].seqNum = 0;
         host->recieverStructure[i].LFR = -1;
-        host->recieverStructure[i].messageBuffer = NULL;
+        host->recieverStructure[i].messageBuffer = calloc(70000, sizeof(char));
     }
 
     host->queue = createMinQueue();
