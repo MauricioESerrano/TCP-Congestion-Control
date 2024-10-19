@@ -4,38 +4,40 @@
 
 // Send ack to sender when called upon.
 void send_ack(Host* host, int ack_num, Frame* frame) {
-    printf("send_ack 1 src id = %d \n", frame->src_id);
-    printf("send_ack 1 dst id = %d \n", frame->dst_id);
+    // printf("send_ack 1 src id = %d \n", frame->src_id);
+    // printf("send_ack 1 dst id = %d \n", frame->dst_id);
     Frame* ackFrame = malloc(sizeof(Frame));
     assert(ackFrame);
-    printf("send_ack 2 src id = %d \n", frame->src_id);
-    printf("send_ack 2 dst id = %d \n", frame->dst_id);
+    // printf("send_ack 2 src id = %d \n", frame->src_id);
+    // printf("send_ack 2 dst id = %d \n", frame->dst_id);
     uint8_t srcID = frame->dst_id;
     uint8_t dstID = frame->src_id;
     ackFrame->src_id = srcID;
     ackFrame->dst_id = dstID;
-    printf("send_ack 3 src id = %d \n", dstID);
-    printf("send_ack 3 dst id = %d \n", srcID);
+    // printf("send_ack 3 src id = %d \n", dstID);
+    // printf("send_ack 3 dst id = %d \n", srcID);
     
     ackFrame->seq_num = ack_num;
     ackFrame->crc_val = 0;
     char* ackFrameToChar = convert_frame_to_char(ackFrame);
     ackFrame->crc_val = compute_crc8(ackFrameToChar);
-    printf("a \n");
+    // printf("a \n");
     ll_append_node(&host->outgoing_frames_head, ackFrame);
-    printf("b \n");
+    // printf("b \n");
     free(ackFrameToChar);
-    printf("c \n");
+    // printf("c \n");
 }
 
 
 void handle_incoming_frames(Host* host) {
     
     int incoming_frames_length = ll_get_length(host->incoming_frames_head);
-    int toCreate = incoming_frames_length;
     
     // While therea are still frames in queue
     while (incoming_frames_length > 0) {
+
+        // printf("yup 3 length = %d\n", incoming_frames_length);
+
         // printf("incoming frames length = %d \n", incoming_frames_length);
 
         LLnode* poppedNode = ll_pop_node(&host->incoming_frames_head);
@@ -51,12 +53,13 @@ void handle_incoming_frames(Host* host) {
         char* poppedFrameToChar = convert_frame_to_char(poppedFrame);
         uint8_t computeCRC = compute_crc8(poppedFrameToChar);
         free(poppedFrameToChar);
+        
 
         // Use CRC and Check for Corruption, if poppedFrame corrupted, Destroy and continue to next iteration in incoming frames head.
         if (computeCRC != 0) {
             // ! Here \/ needed null?
             // poppedFrame = NULL;
-            printf("Data corrupted in incoming frame %d.\n", poppedFrame->seq_num);
+            // printf("Data corrupted in incoming frame %d.\n", poppedFrame->seq_num);
            // ll_destroy_node(poppedNode);
             continue;
         } 
@@ -68,30 +71,11 @@ void handle_incoming_frames(Host* host) {
             int senderSrcId = poppedFrame->src_id;
             RecieverState* reciever = &host->recieverStructure[senderSrcId];
 
-            printf("poppedFrame 1 SRC = %d\n", poppedFrame->src_id);
-            printf("poppedFrame 1 DST = %d\n", poppedFrame->dst_id);
+            // ! initalize && if frame does not already exist in FrameArray i.e. not already processed           
+            int wrapAround = seq_num_diff(reciever->LFR, seq_num);
+            int wrapAround1 = seq_num_diff(reciever->LFR ,reciever->LAF);
 
-            
-            // Check if the poppedFrameNode is within window, if not, drop the frame.
-            // last frame received < current frame number <= last frame received + window_size
-            // ! initalize && if frame does not already exist in FrameArray i.e. not already processed
-            if (reciever->LFR < seq_num && seq_num <= reciever->LFR + glb_sysconfig.window_size)  {
-
-                /*
-                Node* current = host->queue->front;
-                int found = 0;
-
-                while (current != NULL) {
-                    if (current->seqNum == poppedFrame->seq_num) {
-                        printf("Found the node with value: %d\n", poppedFrame->seq_num);
-                        send_ack(host, reciever->LFR, poppedFrame);
-                        found = 1;
-                        break;
-                    }
-                    current = current->next;
-                }
-
-                */
+            if (wrapAround > 0 && wrapAround1 <= glb_sysconfig.window_size)  {
 
                 enqueue(host->queue, poppedFrame->seq_num, poppedFrame);
 
@@ -102,8 +86,8 @@ void handle_incoming_frames(Host* host) {
                     Node* NodeFromQueue = popMin(host->queue);
                     Frame* FrameFromMinQueue = NodeFromQueue->frame;
 
-                    printf("minQueueFrame SRC = %d\n", FrameFromMinQueue->src_id);
-                    printf("minQueueFrame DST = %d\n", FrameFromMinQueue->dst_id);
+                    // printf("minQueueFrame SRC = %d\n", FrameFromMinQueue->src_id);
+                    // printf("minQueueFrame DST = %d\n", FrameFromMinQueue->dst_id);
 
                     strcat(reciever->messageBuffer, FrameFromMinQueue->data);
 
@@ -117,6 +101,10 @@ void handle_incoming_frames(Host* host) {
 
                     // Advance LFR
                     // reciever->LFR = (reciever->LFR + 1) % 256;
+                    // printf("--------------------------------------- \n");
+                    printf("RECIEVER - LFR = %d \n", reciever->LFR);
+                    printf("RECIEVER - Seq = %d \n", FrameFromMinQueue->seq_num);
+                    printf("--------------------------------------- \n");
                     reciever->LFR = FrameFromMinQueue->seq_num;
                     free(FrameFromMinQueue);
                     FrameFromMinQueue = NULL;
@@ -125,9 +113,9 @@ void handle_incoming_frames(Host* host) {
 
                 // Send a cumulative acl for the last frame processed
 
-                printf("poppedFrame 2 SRC = %d\n", poppedFrame->src_id);
-                printf("poppedFrame 2 DST = %d\n", poppedFrame->dst_id);
-
+                // printf("poppedFrame 2 SRC = %d\n", poppedFrame->src_id);
+                // printf("poppedFrame 2 DST = %d\n", poppedFrame->dst_id);
+                reciever->LAF = reciever->LFR + glb_sysconfig.window_size;
                 send_ack(host, reciever->LFR, poppedFrame);
                 // free(poppedFrame);
             }

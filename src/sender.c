@@ -65,10 +65,10 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
             break;
         }
 
-        printf("before \n");
+        // printf("before \n");
         Frame* currNodeToFrame = currNodeHead->value;
-        printf("incomingACK src id = %d \n", currNodeToFrame->src_id);
-        printf("incomingACK dst id = %d \n", currNodeToFrame->dst_id);
+        // printf("incomingACK src id = %d \n", currNodeToFrame->src_id);
+        // printf("incomingACK dst id = %d \n", currNodeToFrame->dst_id);
 
         if (currNodeToFrame != NULL) {
             // ! PART OF FINAL
@@ -95,8 +95,9 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
                 uint8_t CurrAckSeq = currNodeToFrame->seq_num;
                 //  int wrapAroundValue = seq_num_diff(expectAck, CurrAckVal);
 
-                printf("LAR = %d \n", reciever->LAR);
-                printf("Seq = %d \n", CurrAckSeq);
+                printf("SENDER - LAR = %d \n", reciever->LAR);
+                printf("SENDER - Seq = %d \n", CurrAckSeq);
+                printf("--------------------------------------- \n");
 
                 if ( seq_num_diff(reciever->LAR , CurrAckSeq) > 0 /*wrapAroundValue >= 0 && wrapAroundValue < glb_sysconfig.window_size*/) {
 
@@ -111,7 +112,7 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
                     // free(currNodeToFrame);
 
                     for (int i = 0; i < glb_sysconfig.window_size; i++) {
-                        printf("i = %d \n", i);
+                        // printf("i = %d \n", i);
                         if (host->send_window[i].frame != NULL && CurrAckSeq == host->send_window[i].frame->seq_num) {
 
                             // printf("SEQ Recieved - %d\n", CurrAckSeq);
@@ -149,14 +150,14 @@ void handle_input_cmds(Host* host, struct timeval curr_timeval) {
     int input_cmd_length = ll_get_length(host->input_cmdlist_head);
 
     while (input_cmd_length > 0) {
-
-
-
         
         LLnode* ll_input_cmd_node = ll_pop_node(&host->input_cmdlist_head);
         input_cmd_length = ll_get_length(host->input_cmdlist_head);
 
         Cmd* outgoing_cmd = (Cmd*) ll_input_cmd_node->value; 
+
+        // printf("cmd message = %ld \n", strlen(outgoing_cmd->message));
+
         free(ll_input_cmd_node);
  
         int msg_length = strlen(outgoing_cmd->message) + 1;
@@ -176,8 +177,8 @@ void handle_input_cmds(Host* host, struct timeval curr_timeval) {
             outgoing_frame->dst_id = outgoing_cmd->dst_id;
             outgoing_frame->remaining_msg_bytes = 0;
 
-            int senderSrcId = outgoing_frame->src_id;
-            RecieverState* reciever = &host->recieverStructure[senderSrcId];
+            int senderDstId = outgoing_frame->dst_id;
+            RecieverState* reciever = &host->recieverStructure[senderDstId];
 
             outgoing_frame->seq_num = reciever->seqNum;
             reciever->seqNum = reciever->seqNum + 1;
@@ -190,27 +191,22 @@ void handle_input_cmds(Host* host, struct timeval curr_timeval) {
 
             free(outgoing_cmd->message);
             free(outgoing_cmd);
-        } 
-
-
-
-
-
-
-
-
+        }
         
         // if fragmentation logic i.e. multiple frames needed for 1 message.
         else {
 
             int fragmentations = (msg_length + (FRAME_PAYLOAD_SIZE - 1)) / FRAME_PAYLOAD_SIZE;
+
+            // printf("message length = %d \n", msg_length);
+            // printf("fragmentation = %d \n", fragmentations);
+
             int offsetsForBytes = 0;
    
-            printf("fragments = %d \n", fragmentations);
 
             for (int i = 0; i < fragmentations; i++) {
 
-                printf("currFrag i = %d \n", i);
+                // printf("currFrag i = %d \n", i);
     
                 Frame* outgoing_frame = malloc(sizeof(Frame));
                 assert(outgoing_frame);
@@ -240,8 +236,8 @@ void handle_input_cmds(Host* host, struct timeval curr_timeval) {
 
                 outgoing_frame->remaining_msg_bytes = (uint16_t) remainingBytes;
 
-                int senderSrcId = outgoing_frame->src_id;
-                RecieverState* reciever = &host->recieverStructure[senderSrcId];
+                int senderDstId = outgoing_frame->dst_id;
+                RecieverState* reciever = &host->recieverStructure[senderDstId];
 
                 outgoing_frame->seq_num = reciever->seqNum;
                 reciever->seqNum = reciever->seqNum + 1;
@@ -340,6 +336,8 @@ void handle_outgoing_frames(Host* host, struct timeval curr_timeval) {
             memcpy(next_timeout, &curr_timeval, sizeof(struct timeval)); 
             timeval_usecplus(next_timeout, TIMEOUT_INTERVAL_USEC + additional_ts);
             additional_ts += 10000; //ADD ADDITIONAL 10ms
+
+            // printf("yup 1\n");
 
             host->send_window[i].frame = outgoing_frame;
             host->send_window[i].timeout = next_timeout;

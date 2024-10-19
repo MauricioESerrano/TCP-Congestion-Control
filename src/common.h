@@ -128,9 +128,10 @@ typedef struct {
 
     char* messageBuffer;
     uint8_t seqNum;
-    int LFR;
+    uint8_t LFR;
     // ! uint8 wraparound test cases
-    int LAR;
+    uint8_t LAR;
+    uint8_t LAF;
 } RecieverState;
 
 // ! -------------------------------------------------------------
