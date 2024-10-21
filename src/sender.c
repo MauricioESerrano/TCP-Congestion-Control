@@ -138,7 +138,7 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
 //         // if fragmentation logic i.e. multiple frames needed for 1 message.
 //         else {
 
-//             int fragmentations = (msg_length + (FRAME_PAYLOAD_SIZE - 1)) / FRAME_PAYLOAD_SIZE;
+//             int fragmentations = (msg_length + (FRAME_PAYLOAD_SIZE)) / FRAME_PAYLOAD_SIZE;
 //             int offsetsForBytes = 0;
 
 //             for (int i = 0; i < fragmentations; i++) {
@@ -213,7 +213,7 @@ void handle_input_cmds(Host* host, struct timeval curr_timeval) {
             if (remaining_bytes < FRAME_PAYLOAD_SIZE) {
                 copyUpToBytes = remaining_bytes;
             } else {
-                copyUpToBytes = FRAME_PAYLOAD_SIZE;
+                copyUpToBytes = FRAME_PAYLOAD_SIZE -1;
             }
 
             Frame* outgoing_frame = malloc(sizeof(Frame));
@@ -243,15 +243,28 @@ void handle_input_cmds(Host* host, struct timeval curr_timeval) {
             outgoing_frame->crc_val = compute_crc8(make_frame_char);
             
             free(make_frame_char);
-
+            // printf("----------------------------------------------------------- \n");
             // printf("data = %s \n", outgoing_frame->data);
             // printf("data length = %ld \n", strlen(outgoing_frame->data));
-
+            // printf("---------------------------- \n");
+            // printf("offset B4 = %d \n", offset);
+            // printf("copyUpToBytes b4 = %d \n", copyUpToBytes);
+            // printf("remainingBytes B4 = %d \n", remaining_bytes);
+            // printf("---------------------------- \n");
             
             ll_append_node(&host->buffered_outframes_head, outgoing_frame);
 
             offset += copyUpToBytes;
             remaining_bytes -= copyUpToBytes;
+
+            // printf("offset after = %d \n", offset);
+            // printf("copyUpToBytes after = %d \n", copyUpToBytes);
+            // printf("remainingBytes after = %d \n", remaining_bytes);
+
+            //  printf("----------------------------------------------------------- \n");
+
+
+
         }
 
         free(outgoing_cmd->message);
