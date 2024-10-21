@@ -8,8 +8,8 @@ struct timeval* host_get_next_expiring_timeval(Host* host) {
      for (int i = 0; i < glb_sysconfig.window_size; i++) {
         if (host->send_window[i].timeout != NULL && host->send_window[i].timeout != NULL) {
             struct timeval* currentTimeout = host->send_window[i].timeout;
-
-            if (earliestTimeout == NULL || timeval_usecdiff(currentTimeout, earliestTimeout) <= 0) {
+            // ! before it was > , julio said <=
+            if (earliestTimeout == NULL || timeval_usecdiff(currentTimeout, earliestTimeout) > 0) {
                 earliestTimeout = currentTimeout;
             }
         }
