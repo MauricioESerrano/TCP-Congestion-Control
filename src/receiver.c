@@ -3,7 +3,7 @@
 #include "switch.h"
 
 // Send ack to sender when called upon.
-void send_ack(Host* host, int ack_num, Frame* frame) {
+void send_ack(Host* host, uint8_t ack_num, Frame* frame) {
     Frame* ackFrame = malloc(sizeof(Frame));
     assert(ackFrame);
     uint8_t srcID = frame->dst_id;
