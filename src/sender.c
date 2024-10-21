@@ -70,8 +70,8 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
 
                     for (int i = 0; i < glb_sysconfig.window_size; i++) {
                         if (host->send_window[i].frame != NULL && CurrAckSeq == host->send_window[i].frame->seq_num) {
-                            free(host->send_window[i].frame);
-                            free(host->send_window[i].timeout);
+                            // free(host->send_window[i].frame);
+                            // free(host->send_window[i].timeout);
                             host->send_window[i].frame = NULL;
                             host->send_window[i].timeout = NULL;
                             // fix attmept 1 for duplicates messages.
