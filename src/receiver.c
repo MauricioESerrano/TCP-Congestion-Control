@@ -3,19 +3,24 @@
 #include "switch.h"
 
 // Send ack to sender when called upon.
-void send_ack(Host* host, uint8_t ack_num, Frame* frame) {
+void send_ack(Host* host, uint8_t ack_num, Frame* poppedFrame) {
+    // printf("here send_ack \n");
     Frame* ackFrame = malloc(sizeof(Frame));
     assert(ackFrame);
-    uint8_t srcID = frame->dst_id;
-    uint8_t dstID = frame->src_id;
-    ackFrame->src_id = srcID;
-    ackFrame->dst_id = dstID;
+    // printf("frame dst id = %d \n", frame->dst_id);
+    // printf("frame src id = %d \n", frame->src_id);
+    // uint8_t srcID = frame->dst_id;
+    // uint8_t dstID = frame->src_id;
+    ackFrame->src_id = host->id;
+    ackFrame->dst_id = poppedFrame->src_id;
+    // printf("ack dst id = %d \n", ackFrame->dst_id);
+    // printf("ack src id = %d \n", ackFrame->src_id);
     ackFrame->seq_num = ack_num;
     ackFrame->crc_val = 0;
     char* ackFrameToChar = convert_frame_to_char(ackFrame);
     ackFrame->crc_val = compute_crc8(ackFrameToChar);
-    ll_append_node(&host->outgoing_frames_head, ackFrame);
     free(ackFrameToChar);
+    ll_append_node(&host->outgoing_frames_head, ackFrame);
 }
 
 
@@ -57,6 +62,26 @@ void handle_incoming_frames(Host* host) {
             int senderSrcId = poppedFrame->src_id;
             RecieverState* reciever = &host->recieverStructure[senderSrcId];
 
+
+
+            // // ! added ----------------------------------------------
+
+            // Frame* ackFrame = malloc(sizeof(Frame));
+            // assert(ackFrame);
+            // uint8_t srcID = poppedFrame->dst_id;
+            // uint8_t dstID = poppedFrame->src_id;
+            // ackFrame->src_id = srcID;
+            // ackFrame->dst_id = dstID;
+            // ackFrame->crc_val = 0;
+
+            // char* ackFrameToChar = convert_frame_to_char(ackFrame);
+            // ackFrame->crc_val = compute_crc8(ackFrameToChar);
+
+            // free(ackFrameToChar);
+
+
+            // // !-----------------------------------------------------
+
             // ! initalize && if frame does not already exist in FrameArray i.e. not already processed           
             int wrapAround = seq_num_diff(reciever->LFR, seq_num);
             int wrapAround1 = seq_num_diff(reciever->LFR ,reciever->LAF);
@@ -67,8 +92,7 @@ void handle_incoming_frames(Host* host) {
 
                 enqueue(host->queue, poppedFrame->seq_num, poppedFrame);
                 Node* minNode = getMin(host->queue);
-                
-                // . !isEmpty(host->queue) && (reciever->LFR + 1) % 256 <= minNode->seqNum
+
 
                 // logically, == not <= 
                 while ( !isEmpty(host->queue) && (reciever->LFR + 1) % 256 <= minNode->seqNum) {
@@ -89,21 +113,29 @@ void handle_incoming_frames(Host* host) {
                     }
 
                     reciever->LFR = FrameFromMinQueue->seq_num;
-                    free(FrameFromMinQueue);
+                    // free(FrameFromMinQueue);
                     FrameFromMinQueue = NULL;   
                 }
 
                 reciever->LAF = reciever->LFR + glb_sysconfig.window_size;
                 send_ack(host, reciever->LFR, poppedFrame);
+                // printf("src id = %d \n", srcID);
+                // printf("dst id = %d \n", dstID);
+
+                // send_ack(host, reciever->LFR, srcID, dstID);
                 // free(poppedFrame);
             }
             // not in window, was it before the frame? if so, send ack 
             if (diff <= 0) {
 
                 send_ack(host, reciever->LFR, poppedFrame);
+                // send_ack(host, reciever->LFR, srcID, dstID);
 
             }
         }
+        // julio yes sur
+        // free(poppedFrame);
+        // free(poppedNode);
     }
 }
 

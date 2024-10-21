@@ -33,6 +33,8 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
 
     while (length > 0) {
 
+        // printf("here handle incoming acks \n");
+
         LLnode* currNodeHead = ll_pop_node(&host->incoming_frames_head);
         length = ll_get_length(host->incoming_frames_head);
 
@@ -88,6 +90,8 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
         fprintf(cc_diagnostics,"%d,%d,%d,",host->round_trip_num, num_acks_received[glb_sysconfig.host_recv_cc_id], num_dup_acks_for_this_rtt[glb_sysconfig.host_recv_cc_id]); 
     }
 }
+
+
 
 // void handle_input_cmds(Host* host, struct timeval curr_timeval) {
 
@@ -153,7 +157,7 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
 //                     strncpy(outgoing_frame->data, outgoing_cmd->message + offsetsForBytes, FRAME_PAYLOAD_SIZE - 1);
 //                     offsetsForBytes += FRAME_PAYLOAD_SIZE; 
 //                     outgoing_frame->data[FRAME_PAYLOAD_SIZE] = '\0';
-//                     // outgoing_frame->data[extra_bytes] = '\0';
+//                     // outgoing_frame->data[copyUpToBytes] = '\0';
 //                 }
 
 //                 outgoing_frame->src_id = outgoing_cmd->src_id;
@@ -203,22 +207,25 @@ void handle_input_cmds(Host* host, struct timeval curr_timeval) {
         int msg_length = strlen(outgoing_cmd->message)+1;
         int offset = 0;
         uint16_t remaining_bytes = msg_length;
-        int extra_bytes = 0;
+        int copyUpToBytes = 0;
 
         while (remaining_bytes > 0) {
             if (remaining_bytes < FRAME_PAYLOAD_SIZE) {
-                extra_bytes = remaining_bytes;
+                copyUpToBytes = remaining_bytes;
             } else {
-                extra_bytes = FRAME_PAYLOAD_SIZE;
+                copyUpToBytes = FRAME_PAYLOAD_SIZE;
             }
 
             Frame* outgoing_frame = malloc(sizeof(Frame));
             assert(outgoing_frame);
 
-            strncpy(outgoing_frame->data, outgoing_cmd->message + offset, extra_bytes);
-            outgoing_frame->data[extra_bytes] = '\0'; 
+            // memset(outgoing_frame->data, 0, FRAME_PAYLOAD_SIZE);
+
+            strncpy(outgoing_frame->data, outgoing_cmd->message + offset, copyUpToBytes);
+            outgoing_frame->data[copyUpToBytes] = '\0'; 
+
             // printf("remaining bytes: %d\n", remaining_bytes);
-            outgoing_frame->remaining_msg_bytes = remaining_bytes - extra_bytes;
+            outgoing_frame->remaining_msg_bytes = remaining_bytes - copyUpToBytes;
             outgoing_frame->src_id = outgoing_cmd->src_id;
             outgoing_frame->dst_id = outgoing_cmd->dst_id;
 
@@ -236,11 +243,15 @@ void handle_input_cmds(Host* host, struct timeval curr_timeval) {
             outgoing_frame->crc_val = compute_crc8(make_frame_char);
             
             free(make_frame_char);
+
+            // printf("data = %s \n", outgoing_frame->data);
+            // printf("data length = %ld \n", strlen(outgoing_frame->data));
+
             
             ll_append_node(&host->buffered_outframes_head, outgoing_frame);
 
-            offset += extra_bytes;
-            remaining_bytes -= extra_bytes;
+            offset += copyUpToBytes;
+            remaining_bytes -= copyUpToBytes;
         }
 
         free(outgoing_cmd->message);
