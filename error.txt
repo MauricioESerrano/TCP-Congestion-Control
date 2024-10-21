@@ -1,16 +1,899 @@
-SENDER - OUTGOING 1 FRAMES : pushing out frame seq Num = 0 
-RECIEVER - Data corrupted in incoming frame 0.
-SENDER - HANDLE TIMED OUT : timedOut seqNum = 0 
-SENDER - OUTGOING 2 FRAMES :frame timed out for seq Num = 0 
-RECIEVER - Data corrupted in incoming frame 0.
-SENDER - HANDLE TIMED OUT : timedOut seqNum = 0 
-SENDER - OUTGOING 2 FRAMES :frame timed out for seq Num = 0 
-RECIEVER - FRAME RECIEVED 
---------------------------------------- 
-<RECV_1>:[test]
---------------------------------------- 
+length = 4 
+RECIEVER - data corrupted Frame 0 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+length = 4 
+RECIEVER - data corrupted Frame 0 
+length = 3 
+RECIEVER - data corrupted Frame 1 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+length = 4 
+RECIEVER - data corrupted Frame 0 
+length = 3 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 255
+SENDER - INCOMING ACKS :data is corrupted for ACK 255
+SENDER - INCOMING ACKS :data is corrupted for ACK 255
+SENDER - INCOMING ACKS :data is corrupted for ACK 255
+SENDER - INCOMING ACKS :data is corrupted for ACK 255
+length = 4 
+RECIEVER - data corrupted Frame 0 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 255
+SENDER - INCOMING ACKS :data is corrupted for ACK 255
+length = 4 
+RECIEVER - data corrupted Frame 0 
+length = 3 
+RECIEVER - data corrupted Frame 1 
+length = 2 
+length = 1 
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 1 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
 SENDER - INCOMING ACKS :data is corrupted for ACK 0
-SENDER - LAR = 255 
-SENDER - Seq = 0 
---------------------------------------- 
-SENDER - ACK 0 received 
+length = 4 
+RECIEVER - data corrupted Frame 2 
+length = 3 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 5 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+length = 4 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+length = 4 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+length = 4 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 253 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 254
+length = 4 
+length = 3 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 254
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+SENDER - INCOMING ACKS :data is corrupted for ACK 1
+length = 4 
+RECIEVER - data corrupted Frame 8 
+length = 3 
+RECIEVER - data corrupted Frame 9 
+length = 2 
+RECIEVER - data corrupted Frame 2 
+length = 1 
+RECIEVER - data corrupted Frame 3 

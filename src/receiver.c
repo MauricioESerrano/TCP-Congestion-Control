@@ -20,11 +20,13 @@ void send_ack(Host* host, int ack_num, Frame* frame) {
 
 
 void handle_incoming_frames(Host* host) {
-    
+
     int incoming_frames_length = ll_get_length(host->incoming_frames_head);
     
     // While therea are still frames in queue
     while (incoming_frames_length > 0) {
+
+        // printf("length = %d \n", incoming_frames_length);
 
         LLnode* poppedNode = ll_pop_node(&host->incoming_frames_head);
         incoming_frames_length = ll_get_length(host->incoming_frames_head);
@@ -43,16 +45,13 @@ void handle_incoming_frames(Host* host) {
 
         // Use CRC and Check for Corruption, if poppedFrame corrupted, Destroy and continue to next iteration in incoming frames head.
         if (computeCRC != 0) {
-
-            // printf("RECIEVER - Data corrupted in incoming frame %d.\n", poppedFrame->seq_num);
+            // printf("RECIEVER - data corrupted Frame %d \n", poppedFrame->seq_num);
            // ll_destroy_node(poppedNode);
             continue;
         } 
 
 
         else {
-
-            // printf("RECIEVER - FRAME RECIEVED \n");
 
             uint8_t seq_num = poppedFrame->seq_num;
             int senderSrcId = poppedFrame->src_id;
@@ -63,12 +62,15 @@ void handle_incoming_frames(Host* host) {
             int wrapAround1 = seq_num_diff(reciever->LFR ,reciever->LAF);
 
             int diff = seq_num_diff(seq_num, reciever->LFR);
-
+            // is this current frame within the window
             if (wrapAround > 0 && wrapAround1 <= glb_sysconfig.window_size)  {
 
                 enqueue(host->queue, poppedFrame->seq_num, poppedFrame);
                 Node* minNode = getMin(host->queue);
                 
+                // . !isEmpty(host->queue) && (reciever->LFR + 1) % 256 <= minNode->seqNum
+
+                // logically, == not <= 
                 while ( !isEmpty(host->queue) && (reciever->LFR + 1) % 256 <= minNode->seqNum) {
                     
                     Node* NodeFromQueue = popMin(host->queue);
@@ -76,10 +78,11 @@ void handle_incoming_frames(Host* host) {
 
                     strcat(reciever->messageBuffer, FrameFromMinQueue->data);
 
+                    // printf("string data = %s \n", FrameFromMinQueue->data);
+
                     if (FrameFromMinQueue->remaining_msg_bytes == 0) {
-                        // printf("--------------------------------------- \n");
+
                         printf("<RECV_%d>:[%s]\n", host->id, reciever->messageBuffer);
-                        //  printf("--------------------------------------- \n");
                         reciever->messageBuffer[0] = '\0';
                         // ! added this, is it ok?
                         clearMinQueue(host->queue);   
@@ -94,7 +97,7 @@ void handle_incoming_frames(Host* host) {
                 send_ack(host, reciever->LFR, poppedFrame);
                 // free(poppedFrame);
             }
-
+            // not in window, was it before the frame? if so, send ack 
             if (diff <= 0) {
 
                 send_ack(host, reciever->LFR, poppedFrame);
