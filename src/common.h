@@ -132,21 +132,24 @@ typedef struct {
     // ! uint8 wraparound test cases
     uint8_t LAR;
     uint8_t LAF;
+    
 } RecieverState;
 
-// ! -------------------------------------------------------------
+
 typedef struct Node {
     uint8_t seqNum;
     Frame* frame;
-    struct Node* next;
+    // struct Node* next;
 } Node;
 
 typedef struct MinQueue {
-    Node* front;
-    Node* rear;
-    Node* minNode; 
+    Node* array[MAX_SEQ_NUM];
+    int size;
 } MinQueue;
-// ! ---------------------------------------------------------------
+
+typedef struct {
+    MinQueue* minQueues[255];
+} ArrayOfMinQueue;
 
 
 // PA1b ONLY
@@ -188,7 +191,7 @@ struct Host_t {
     RecieverState* recieverStructure;
     struct send_window_slot* send_window;
     struct timeval* latest_timeout;
-    struct MinQueue* queue;
+    ArrayOfMinQueue* arrayMinQueue;
     
     CongestionControl* cc; //PA1b ONLY
 };

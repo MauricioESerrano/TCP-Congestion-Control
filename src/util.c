@@ -1,141 +1,124 @@
 #include "util.h"
 
-// create a new node with a Frame and seqNum
-Node* createNode(uint8_t seqNum, Frame* frame) {
-    Node* newNode = (Node*)malloc(sizeof(Node));
-    if (!newNode) {
-        perror("Failed to allocate memory for new node");
+// Function to create a new heap node
+Node* createNode(uint8_t seq_num, Frame* frame) {
+    Node* node = (Node*)malloc(sizeof(Node));
+    if (!node) {
+        // perror("Failed to allocate memory for new node");
         exit(EXIT_FAILURE);
     }
-    newNode->seqNum = seqNum;
-    newNode->frame = frame;
-    newNode->next = NULL;
-    return newNode;
+    node->seqNum = seq_num;
+    node->frame = frame;
+    return node;
 }
 
-// create a new MinQueue
+// Function to create a min heap
 MinQueue* createMinQueue() {
     MinQueue* queue = (MinQueue*)malloc(sizeof(MinQueue));
     if (!queue) {
-        perror("Failed to allocate memory for MinQueue");
+        // perror("Failed to allocate memory for MinQueue");
         exit(EXIT_FAILURE);
     }
-    queue->front = queue->rear = NULL;
-    queue->minNode = NULL;
+    queue->size = 0;
     return queue;
 }
 
-
-// check if the queue is empty
-int isEmpty(MinQueue* queue) {
-    return queue->front == NULL;
+// Helper function to swap two nodes
+void swapNode(Node** a, Node** b) {
+    Node* temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
-// enqueue an element
+// Function to insert a new node into the min heap
 void enqueue(MinQueue* queue, uint8_t seqNum, Frame* frame) {
-    
-    Node* newNode = createNode(seqNum, frame);
-    if (isEmpty(queue)) {
-        queue->front = queue->rear = newNode;
-        queue->minNode = newNode;
-    } else {
-        queue->rear->next = newNode;
-        queue->rear = newNode;
-
-        if (seqNum < queue->minNode->seqNum) {
-            queue->minNode = newNode;
+    // Check for duplicate sequence number
+    for (int i = 0; i < queue->size; i++) {
+        if (queue->array[i]->seqNum == seqNum) {
+            return; // Duplicate found, skip insertion
         }
+    }
+
+    if (queue->size == 255) {
+        return;
+    }
+
+    // Create the new node and insert at the end
+    Node* newNode = createNode(frame->seq_num, frame);
+    int i = queue->size++;
+    queue->array[i] = newNode;
+
+    while (i != 0 && seq_num_diff(queue->array[(i - 1) / 2]->seqNum, queue->array[i]->seqNum) < 0) {
+        swapNode(&queue->array[i], &queue->array[(i - 1) / 2]);
+        i = (i - 1) / 2;
+    }
+
+
+}
+
+void updateMinNode(MinQueue* queue, int index) {
+    int smallest = index;
+    int left = 2 * index + 1;
+    int right = 2 * index + 2;
+
+    // Compare the left child with the current smallest node
+    if (left < queue->size && seq_num_diff(queue->array[left]->seqNum, queue->array[smallest]->seqNum) > 0) {
+        smallest = left;
+    }
+
+    // Compare the right child with the current smallest node
+    if (right < queue->size && seq_num_diff(queue->array[right]->seqNum, queue->array[smallest]->seqNum) > 0) {
+        smallest = right;
+    }
+
+    // If a smaller node was found, swap and continue updating
+    if (smallest != index) {
+        swapNode(&queue->array[smallest], &queue->array[index]);
+        updateMinNode(queue, smallest);
     }
 }
 
-// dequeue an element
-Node* dequeue(MinQueue* queue) {
-    if (isEmpty(queue)) {
-        printf("Queue is empty\n");
-        return NULL;
-    }
-    Node* temp = queue->front;
-    queue->front = queue->front->next;
-    if (temp == queue->minNode) {
-        Node* current = queue->front;
-        queue->minNode = current;
-        while (current) {
-            if (current->seqNum < queue->minNode->seqNum) {
-                queue->minNode = current;
-            }
-            current = current->next;
-        }
-    }
-    return temp; 
-}
 
-// get the minimum element
+
+// Function to get the minimum node (root) from the heap without extracting it
+
 Node* getMin(MinQueue* queue) {
-    if (isEmpty(queue)) {
-        printf("Queue is empty\n");
-        return NULL;
+    if (queue->size <= 0) {
+        return NULL; // Heap is empty
     }
-    return queue->minNode;
+    return queue->array[0]; // Return the root without removing it
 }
 
-// dequeue the minimum element (smallest seqNum)
+// Function to extract the minimum node (root) from the heap
 Node* popMin(MinQueue* queue) {
-    if (isEmpty(queue)) {
-        printf("Queue is empty\n");
+    if (queue->size <= 0) {
         return NULL;
     }
-
-    Node* minNode = queue->minNode;
-    Node* current = queue->front;
-    Node* prev = NULL;
-    
-    while (current && current != minNode) {
-        prev = current;
-        current = current->next;
+    if (queue->size == 1) {
+        queue->size--;
+        return queue->array[0];
     }
 
-    if (prev) {
-        prev->next = minNode->next;
-    } else {
-        queue->front = minNode->next;
-    }
+    // Store the minimum value, remove it, and heapify
+    Node* root = queue->array[0];
+    queue->array[0] = queue->array[--queue->size];
+    updateMinNode(queue, 0);
 
-    if (queue->rear == minNode) {
-        queue->rear = prev;
-    }
-
-    queue->minNode = queue->front;
-    current = queue->front;
-    while (current) {
-        if (current->seqNum < queue->minNode->seqNum) {
-            queue->minNode = current;
-        }
-        current = current->next;
-    }
-
-    return minNode;
+    return root;
 }
-
 
 void clearMinQueue(MinQueue* queue) {
-    while (!isEmpty(queue)) {
-        Node* node = dequeue(queue);
-        free(node);
+    if (queue == NULL) {
+        return; // Check for null pointer
     }
-}
 
-void freeAndClearMinQueue(MinQueue* queue) {
-    while (!isEmpty(queue)) {
-        Node* node = dequeue(queue);
-        free(node);
+    // Iterate through the queue and set all nodes to NULL
+    for (int i = 0; i < queue->size; i++) {
+        queue->array[i] = NULL; // Clear the reference to each node
     }
-    free(queue);
-}
 
-void freeNode(Node* node) {
-    if (node) {
-        free(node);
-    }
+    // Reset the size of the queue
+    queue->size = 0;
 }
 
 // ! ---------------------------------------------------------------------------

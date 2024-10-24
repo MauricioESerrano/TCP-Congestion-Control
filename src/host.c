@@ -28,22 +28,24 @@ void init_host(Host* host, int id) {
     gettimeofday(host->latest_timeout, NULL);
 
     host->recieverStructure = calloc(glb_num_hosts, sizeof(RecieverState));
+    host->arrayMinQueue = calloc(1, sizeof(ArrayOfMinQueue));
+    
     for (int i = 0; i < glb_num_hosts; i++) {
         host->recieverStructure[i].LAR = -1;
         host->recieverStructure[i].seqNum = 0;
         host->recieverStructure[i].LFR = -1;
         host->recieverStructure[i].LAF = glb_sysconfig.window_size-1;
         host->recieverStructure[i].messageBuffer = calloc(70000, sizeof(char));
+        host->arrayMinQueue->minQueues[i] = createMinQueue();
     }
 
-    host->queue = createMinQueue();
+    // host->queue = createMinQueue();
 
     // TODO: You should fill in this function as necessary to initialize variables
-    // ! added.
-
 
     // *********** PA1b ONLY ***********
     host->cc = calloc(glb_num_hosts, sizeof(CongestionControl));
+    
     for (int i = 0; i < glb_num_hosts; i++) {
         host->cc[i].cwnd = 1.0; 
         host->cc[i].ssthresh = (double)glb_sysconfig.window_size; 

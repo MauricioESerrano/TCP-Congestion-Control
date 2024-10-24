@@ -14,17 +14,14 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-Node* createNode(uint8_t seqNum, Frame* frame);
+Node* createNode(uint8_t seq_num, Frame* frame);
 MinQueue* createMinQueue();
-int isEmpty(MinQueue* queue);
+void swapNode(Node** a, Node** b);
+void updateMinNode(MinQueue* minHeap, int index);
 void enqueue(MinQueue* queue, uint8_t seqNum, Frame* frame);
-Node* dequeue(MinQueue* queue);
 Node* getMin(MinQueue* queue);
 Node* popMin(MinQueue* queue);
 void clearMinQueue(MinQueue* queue);
-void freeAndClearMinQueue(MinQueue* queue);
-void freeNode(Node* node);
-
 
 // Linked list functions
 int ll_get_length(LLnode*);
