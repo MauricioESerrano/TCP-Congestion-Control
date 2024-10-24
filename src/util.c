@@ -52,8 +52,6 @@ void enqueue(MinQueue* queue, uint8_t seqNum, Frame* frame) {
         swapNode(&queue->array[i], &queue->array[(i - 1) / 2]);
         i = (i - 1) / 2;
     }
-
-
 }
 
 void updateMinNode(MinQueue* queue, int index) {
@@ -77,7 +75,6 @@ void updateMinNode(MinQueue* queue, int index) {
         updateMinNode(queue, smallest);
     }
 }
-
 
 
 // Function to get the minimum node (root) from the heap without extracting it

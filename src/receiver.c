@@ -32,6 +32,7 @@ void handle_incoming_frames(Host* host) {
 
         // Use CRC and Check for Corruption, if poppedFrame corrupted, Destroy and continue to next iteration in incoming frames head.
         if (computeCRC != 0) {
+            printf("Reciever - Corrupted frame = %d \n", poppedFrame->seq_num);
             continue;
         } 
         int senderSrcId = poppedFrame->src_id;
