@@ -1,0 +1,13 @@
+1. Slow start
+
+Part C not understood when should occur it terms of logic.
+
+2. Timeout
+
+Whole logic flow needs better understanding. Does this essentially overwrite what we did in p1a?
+
+3. Fast Retransmission and Fast Recovery
+
+Part C not understood entirely. Specifically the "This inflates the congestion window for the additional segment that has left the network.  Transmit a segment only if space remains in the sender’s window and allowed by the new value of cwnd."
+
+

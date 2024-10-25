@@ -139,7 +139,6 @@ typedef struct {
 typedef struct Node {
     uint8_t seqNum;
     Frame* frame;
-    // struct Node* next;
 } Node;
 
 typedef struct MinQueue {
@@ -156,10 +155,11 @@ typedef struct {
 struct CongestionControl_t {
     double cwnd;
     double ssthresh; 
-    uint8_t dup_acks; 
+    uint8_t dup_acks;
     enum CCState state;
 }; 
 typedef struct CongestionControl_t CongestionControl;
+
 
 //Host data structure
 struct Host_t {

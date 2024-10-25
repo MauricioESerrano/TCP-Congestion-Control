@@ -46,35 +46,25 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
             incomingFrameCRC_Calculation = compute_crc8(frameToChar);
         
             if (incomingFrameCRC_Calculation != 0) {
-                printf("SENDER - Corrupted Ack = %d \n", currNodeToFrame->seq_num);
                 ll_destroy_node(currNodeHead);
                 continue;
             }
 
-            else {
-                int senderSrcId = currNodeToFrame->src_id;
-                RecieverState* reciever = &host->recieverStructure[senderSrcId];
-                uint8_t CurrSeq = currNodeToFrame->seq_num;
+            int senderSrcId = currNodeToFrame->src_id;
+            RecieverState* reciever = &host->recieverStructure[senderSrcId];
+            uint8_t CurrSeq = currNodeToFrame->seq_num;
+            
+            if ( seq_num_diff(reciever->LAR , CurrSeq) > 0) { 
+                reciever->LAR = CurrSeq;
+                num_acks_received[currNodeToFrame->src_id]++;
 
-                // ! pa1b - checks whether this newAck is an ack we have already recieved.
-                if (reciever->LAR == CurrSeq) {
-                    printf("SENDER - Duplicate Ack = %d \n", CurrSeq);
-                    num_dup_acks_for_this_rtt[currNodeToFrame->src_id]++;
-                }
-                
-                if ( seq_num_diff(reciever->LAR , CurrSeq) > 0) { 
-                    reciever->LAR = CurrSeq;
-                    printf("SENDER - New Ack = %d \n", CurrSeq);
-                    num_acks_received[currNodeToFrame->src_id]++;
-
-                    for (int i = 0; i < glb_sysconfig.window_size; i++) {
-                        if (host->send_window[i].frame != NULL && seq_num_diff(host->send_window[i].frame->seq_num, CurrSeq) >= 0 ) {
-                            host->send_window[i].frame = NULL;
-                            host->send_window[i].timeout = NULL;
-                        }
+                for (int i = 0; i < glb_sysconfig.window_size; i++) {
+                    if (host->send_window[i].frame != NULL && seq_num_diff(host->send_window[i].frame->seq_num, CurrSeq) >= 0 ) {
+                        host->send_window[i].frame = NULL;
+                        host->send_window[i].timeout = NULL;
                     }
                 }
-            }
+            }     
         }
     }
 

@@ -39,8 +39,6 @@ void init_host(Host* host, int id) {
         host->arrayMinQueue->minQueues[i] = createMinQueue();
     }
 
-    // host->queue = createMinQueue();
-
     // TODO: You should fill in this function as necessary to initialize variables
 
     // *********** PA1b ONLY ***********
