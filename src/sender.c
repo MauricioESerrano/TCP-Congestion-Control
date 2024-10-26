@@ -262,7 +262,7 @@ void handle_input_cmds(Host* host, struct timeval curr_timeval) {
 }
 
 // ***----------------------------------------------------------------------------------------------------------------------***
-//                                                           SEPERATION
+//                                                 HANDLE TIMEDOUT FRAMES ORIGINAL
 // ***----------------------------------------------------------------------------------------------------------------------***
 
 // void handle_timedout_frames(Host* host, struct timeval curr_timeval) {
@@ -324,35 +324,24 @@ void handle_outgoing_frames(Host* host, struct timeval curr_timeval) {
 
     long additional_ts = 0; 
 
+    Frame* peekedFrame = ll_peek_node(&host->buffered_outframes_head->value);
+
+    if (peekedFrame == NULL) {
+        printf("then idk \n");
+        return;
+    }
+
+    uint8_t destid = peekedFrame->dst_id;
+
+    printf("dest id = %d \n", destid);
+
     if (timeval_usecdiff(&curr_timeval, host->latest_timeout) > 0) {
         memcpy(&curr_timeval, host->latest_timeout, sizeof(struct timeval)); 
     }
 
-    // int recieverId = -1;
-
-    // for (int i = 0; i < glb_sysconfig.window_size && ll_get_length(host->buffered_outframes_head) > 0; i++) {
-    //     printf("iterating i = %d \n", i);
-    //     if (host->send_window[i].frame != NULL) {
-    //         recieverId = host->send_window[i].frame->dst_id;
-    //         printf("reciever 1st id = %d \n", recieverId);
-    //         break;
-    //     }
-    // }
-
-    // printf("reciever 2nd id = %d \n", recieverId);
-
-    // if (recieverId == -1) {
-    //     printf("SENDER - OUTGOING: no Frame found \n");
-    //     return;
-    // }
-
-    // CongestionControl* cc = &host->cc[recieverId];
-
     // Send out the frames that have timed out(i.e. timeout = NULL)
     // ! I think this should be floor(cc->cwnd); or ceil if 3.8 for instance
     for (int i = 0; i < glb_sysconfig.window_size; i++) {
-
-    // for (int i = 0; i < cc->cwnd; i++) {
         if (host->send_window[i].frame != NULL && host->send_window[i].timeout == NULL) {
 
             Frame* outgoingFrame = host->send_window[i].frame;
@@ -369,8 +358,6 @@ void handle_outgoing_frames(Host* host, struct timeval curr_timeval) {
     }
 
     for (int i = 0; i < glb_sysconfig.window_size && ll_get_length(host->buffered_outframes_head) > 0; i++) {
-
-    // for (int i = 0; i < cc->cwnd && ll_get_length(host->buffered_outframes_head) > 0; i++) {
         if (host->send_window[i].frame == NULL) {
 
             LLnode* ll_outframe_node = ll_pop_node(&host->buffered_outframes_head);
@@ -429,7 +416,7 @@ void handle_outgoing_frames(Host* host, struct timeval curr_timeval) {
 
 
 // ***----------------------------------------------------------------------------------------------------------------------***
-//                                                           SEPERATION
+//                                                 HANDLE OUTGOING FRAMES ORIGINAL
 // ***----------------------------------------------------------------------------------------------------------------------***
 
 
