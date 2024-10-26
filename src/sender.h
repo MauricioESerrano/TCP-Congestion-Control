@@ -14,6 +14,10 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+
+// void FastRetransmission(Host* host, Frame* frameReference, struct timeval curr_timeval);
+// void TCPCongestionControl(Host* host, Frame* ackFrame, struct timeval curr_timeval);
+void shiftLeft(Host* host);
 void handle_input_cmds(Host*, struct timeval); 
 void handle_timedout_frames(Host*, struct timeval); 
 void handle_incoming_acks(Host*, struct timeval);

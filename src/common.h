@@ -128,9 +128,11 @@ typedef struct {
 
     char* messageBuffer;
     uint8_t seqNum;
+    // last frame recieved
     uint8_t LFR;
-    // ! uint8 wraparound test cases
+    // last ack recieved
     uint8_t LAR;
+    // largest acceptable frame
     uint8_t LAF;
     
 } RecieverState;
@@ -154,7 +156,7 @@ typedef struct {
 // PA1b ONLY
 struct CongestionControl_t {
     double cwnd;
-    double ssthresh; 
+    double ssthresh;
     uint8_t dup_acks;
     enum CCState state;
 }; 
@@ -189,6 +191,7 @@ struct Host_t {
 
     // struct ReceiverState* receiverStates;
     RecieverState* recieverStructure;
+    
     struct send_window_slot* send_window;
     struct timeval* latest_timeout;
     ArrayOfMinQueue* arrayMinQueue;
