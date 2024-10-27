@@ -58,6 +58,7 @@ void handle_incoming_frames(Host* host) {
                 minNode = getMin(host->arrayMinQueue->minQueues[senderSrcId]);
                 reciever->LFR = FrameFromMinQueue->seq_num;
                 reciever->LAF = reciever->LFR + glb_sysconfig.window_size;
+                // !! culamtive ack not occuring here
                 send_ack(host, reciever->LFR, FrameFromMinQueue);
                 FrameFromMinQueue = NULL;
             }

@@ -1,0 +1,10 @@
+rtt,acks_received,dup_acks,state,cwnd,ssthresh,frames_sent,frames_dropped,frames_in_sender_window,timedout_frames
+1,0,0,Slow Start,1.000000,8.000000,2,0,2,0
+2,0,0,Fast Recovery & Fast Retransmit,5.000000,2.000000,7,3,6,0
+3,0,0,Fast Recovery & Fast Retransmit,6.000000,2.000000,4,0,7,0
+4,0,0,Fast Recovery & Fast Retransmit,6.000000,2.000000,1,0,7,0
+5,0,0,Fast Recovery & Fast Retransmit,6.000000,2.000000,1,0,7,0
+6,0,0,Fast Recovery & Fast Retransmit,6.000000,2.000000,1,0,7,0
+7,0,0,Fast Recovery & Fast Retransmit,6.000000,2.000000,1,0,7,0
+8,0,0,Fast Recovery & Fast Retransmit,6.000000,2.000000,1,0,7,0
+9,0,0,Fast Recovery & Fast Retransmit,6.000000,2.000000,0,0,0,0

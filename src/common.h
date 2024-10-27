@@ -134,6 +134,8 @@ typedef struct {
     uint8_t LAR;
     // largest acceptable frame
     uint8_t LAF;
+    // last frame sent
+    uint8_t LFS;
     
 } RecieverState;
 
