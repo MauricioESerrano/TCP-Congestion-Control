@@ -1,899 +1,468 @@
-length = 4 
-RECIEVER - data corrupted Frame 0 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-length = 4 
-RECIEVER - data corrupted Frame 0 
-length = 3 
-RECIEVER - data corrupted Frame 1 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-length = 4 
-RECIEVER - data corrupted Frame 0 
-length = 3 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 255
-SENDER - INCOMING ACKS :data is corrupted for ACK 255
-SENDER - INCOMING ACKS :data is corrupted for ACK 255
-SENDER - INCOMING ACKS :data is corrupted for ACK 255
-SENDER - INCOMING ACKS :data is corrupted for ACK 255
-length = 4 
-RECIEVER - data corrupted Frame 0 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 255
-SENDER - INCOMING ACKS :data is corrupted for ACK 255
-length = 4 
-RECIEVER - data corrupted Frame 0 
-length = 3 
-RECIEVER - data corrupted Frame 1 
-length = 2 
-length = 1 
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 1 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 0
-length = 4 
-RECIEVER - data corrupted Frame 2 
-length = 3 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 5 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-length = 4 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-length = 4 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-length = 4 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 253 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 254
-length = 4 
-length = 3 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 254
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-SENDER - INCOMING ACKS :data is corrupted for ACK 1
-length = 4 
-RECIEVER - data corrupted Frame 8 
-length = 3 
-RECIEVER - data corrupted Frame 9 
-length = 2 
-RECIEVER - data corrupted Frame 2 
-length = 1 
-RECIEVER - data corrupted Frame 3 
+-------------------------------------------------------------------------RTT: 1 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames sent out = 0 
+<RECV_1>:[MSG-1]
+handleIncomingAcks - number of acks to process = 1 
+LAR = 255 
+ackFrame = 0 
+handleIncomingAcks - valid acks = 0 
+-------------------------------------------------------------------------RTT: 2 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames sent out = 1 
+handleOutgoingFrames - Frames sent out = 2 
+<RECV_1>:[MSG-2]
+<RECV_1>:[MSG-3]
+handleIncomingAcks - number of acks to process = 2 
+LAR = 0 
+ackFrame = 1 
+handleIncomingAcks - valid acks = 1 
+handleIncomingAcks - number of acks to process = 1 
+LAR = 1 
+ackFrame = 2 
+handleIncomingAcks - valid acks = 2 
+-------------------------------------------------------------------------RTT: 3 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames sent out = 3 
+handleOutgoingFrames - Frames sent out = 4 
+handleOutgoingFrames - Frames sent out = 5 
+handleOutgoingFrames - Frames sent out = 6 
+<RECV_1>:[MSG-4]
+<RECV_1>:[MSG-5]
+<RECV_1>:[MSG-6]
+<RECV_1>:[MSG-7]
+handleIncomingAcks - number of acks to process = 4 
+LAR = 2 
+ackFrame = 3 
+handleIncomingAcks - valid acks = 3 
+handleIncomingAcks - number of acks to process = 3 
+LAR = 3 
+ackFrame = 4 
+handleIncomingAcks - valid acks = 4 
+handleIncomingAcks - number of acks to process = 2 
+LAR = 4 
+ackFrame = 5 
+handleIncomingAcks - valid acks = 5 
+handleIncomingAcks - number of acks to process = 1 
+LAR = 5 
+ackFrame = 6 
+handleIncomingAcks - valid acks = 6 
+-------------------------------------------------------------------------RTT: 4 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames sent out = 7 
+handleOutgoingFrames - Frames sent out = 8 
+handleOutgoingFrames - Frames sent out = 9 
+handleOutgoingFrames - Frames sent out = 10 
+handleOutgoingFrames - Frames sent out = 11 
+handleOutgoingFrames - Frames sent out = 12 
+handleOutgoingFrames - Frames sent out = 13 
+handleOutgoingFrames - Frames sent out = 14 
+<RECV_1>:[MSG-8]
+<RECV_1>:[MSG-9]
+<RECV_1>:[MSG-10]
+<RECV_1>:[MSG-11]
+handleIncomingAcks - number of acks to process = 4 
+LAR = 6 
+ackFrame = 7 
+handleIncomingAcks - valid acks = 7 
+handleIncomingAcks - number of acks to process = 3 
+handleIncomingAcks - valid acks = 8 
+handleIncomingAcks - number of acks to process = 2 
+handleIncomingAcks - valid acks = 9 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - valid acks = 10 
+-------------------------------------------------------------------------RTT: 5 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames sent out = 15 
+handleOutgoingFrames - Frames sent out = 16 
+handleOutgoingFrames - Frames sent out = 17 
+handleOutgoingFrames - Frames sent out = 18 
+handleIncomingAcks - number of acks to process = 4 
+handleIncomingAcks - nonValid acks = 10 
+handleIncomingAcks - number of acks to process = 3 
+handleIncomingAcks - nonValid acks = 10 
+handleIncomingAcks - number of acks to process = 2 
+FastRetransmission - Frames retransmitted = 11 
+cwnd prior calculation cc_AIMD > FRFT = 9.329317 
+sshresh cc_AIMD > FRFT = 4.664658 
+handleIncomingAcks - nonValid acks = 10 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - nonValid acks = 10 
+-------------------------------------------------------------------------RTT: 6 -------------------------------------------------------------------------
+<RECV_1>:[MSG-12]
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - valid acks = 11 
+-------------------------------------------------------------------------RTT: 7 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames sent out = 19 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - nonValid acks = 11 
+-------------------------------------------------------------------------RTT: 8 -------------------------------------------------------------------------
+-------------------------------------------------------------------------RTT: 9 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 15 
+handleIncomingAcks - number of acks to process = 1 
+LAR = 11 
+ackFrame = 11 
+handleIncomingAcks - nonValid acks = 11 
+-------------------------------------------------------------------------RTT: 10 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 16 
+handleIncomingAcks - number of acks to process = 1 
+LAR = 11 
+ackFrame = 11 
+FastRetransmission - Frames retransmitted = 12 
+cwnd prior calculation cc_SS > FRFT = 1.000000 
+sshresh cc_SS > FRFT = 2.000000 
+handleIncomingAcks - nonValid acks = 11 
+-------------------------------------------------------------------------RTT: 11 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 17 
+handleOutgoingFrames - Frames timedout = 18 
+handleOutgoingFrames - Frames timedout = 19 
+handleOutgoingFrames - Frames timedout = 13 
+handleOutgoingFrames - Frames timedout = 14 
+<RECV_1>:[MSG-13]
+handleIncomingAcks - number of acks to process = 4 
+handleIncomingAcks - valid acks = 12 
+handleIncomingAcks - number of acks to process = 3 
+handleIncomingAcks - nonValid acks = 12 
+handleIncomingAcks - number of acks to process = 2 
+handleIncomingAcks - nonValid acks = 12 
+handleIncomingAcks - number of acks to process = 1 
+FastRetransmission - Frames retransmitted = 13 
+cwnd prior calculation cc_AIMD > FRFT = 2.000000 
+sshresh cc_AIMD > FRFT = 2.000000 
+handleIncomingAcks - nonValid acks = 12 
+-------------------------------------------------------------------------RTT: 12 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames sent out = 20 
+<RECV_1>:[MSG-14]
+handleIncomingAcks - number of acks to process = 2 
+handleIncomingAcks - valid acks = 13 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - nonValid acks = 13 
+-------------------------------------------------------------------------RTT: 13 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames sent out = 21 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - nonValid acks = 13 
+-------------------------------------------------------------------------RTT: 14 -------------------------------------------------------------------------
+-------------------------------------------------------------------------RTT: 15 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 15 
+handleIncomingAcks - number of acks to process = 1 
+LAR = 13 
+ackFrame = 13 
+FastRetransmission - Frames retransmitted = 14 
+cwnd prior calculation cc_SS > FRFT = 1.000000 
+sshresh cc_SS > FRFT = 2.000000 
+handleIncomingAcks - nonValid acks = 13 
+-------------------------------------------------------------------------RTT: 16 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 16 
+handleOutgoingFrames - Frames timedout = 17 
+handleOutgoingFrames - Frames timedout = 18 
+handleOutgoingFrames - Frames timedout = 19 
+handleOutgoingFrames - Frames timedout = 20 
+<RECV_1>:[MSG-15]
+handleIncomingAcks - number of acks to process = 4 
+handleIncomingAcks - valid acks = 14 
+handleIncomingAcks - number of acks to process = 3 
+handleIncomingAcks - nonValid acks = 14 
+handleIncomingAcks - number of acks to process = 2 
+handleIncomingAcks - nonValid acks = 14 
+handleIncomingAcks - number of acks to process = 1 
+FastRetransmission - Frames retransmitted = 15 
+cwnd prior calculation cc_AIMD > FRFT = 2.000000 
+sshresh cc_AIMD > FRFT = 2.000000 
+handleIncomingAcks - nonValid acks = 14 
+-------------------------------------------------------------------------RTT: 17 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 21 
+handleOutgoingFrames - Frames sent out = 22 
+<RECV_1>:[MSG-16]
+handleIncomingAcks - number of acks to process = 3 
+handleIncomingAcks - valid acks = 15 
+handleIncomingAcks - number of acks to process = 2 
+handleIncomingAcks - nonValid acks = 15 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - nonValid acks = 15 
+-------------------------------------------------------------------------RTT: 18 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames sent out = 23 
+handleIncomingAcks - number of acks to process = 1 
+FastRetransmission - Frames retransmitted = 16 
+cwnd prior calculation cc_AIMD > FRFT = 2.000000 
+sshresh cc_AIMD > FRFT = 2.000000 
+handleIncomingAcks - nonValid acks = 15 
+-------------------------------------------------------------------------RTT: 19 -------------------------------------------------------------------------
+<RECV_1>:[MSG-17]
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - valid acks = 16 
+-------------------------------------------------------------------------RTT: 20 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames sent out = 24 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - nonValid acks = 16 
+-------------------------------------------------------------------------RTT: 21 -------------------------------------------------------------------------
+-------------------------------------------------------------------------RTT: 22 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 23 
+handleIncomingAcks - number of acks to process = 1 
+LAR = 16 
+ackFrame = 16 
+handleIncomingAcks - nonValid acks = 16 
+-------------------------------------------------------------------------RTT: 23 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 24 
+handleIncomingAcks - number of acks to process = 1 
+LAR = 16 
+ackFrame = 16 
+FastRetransmission - Frames retransmitted = 17 
+cwnd prior calculation cc_SS > FRFT = 1.000000 
+sshresh cc_SS > FRFT = 2.000000 
+handleIncomingAcks - nonValid acks = 16 
+-------------------------------------------------------------------------RTT: 24 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 18 
+handleOutgoingFrames - Frames timedout = 19 
+handleOutgoingFrames - Frames timedout = 20 
+handleOutgoingFrames - Frames timedout = 21 
+handleOutgoingFrames - Frames timedout = 22 
+<RECV_1>:[MSG-18]
+<RECV_1>:[MSG-19]
+<RECV_1>:[MSG-20]
+<RECV_1>:[MSG-21]
+handleIncomingAcks - number of acks to process = 4 
+handleIncomingAcks - valid acks = 17 
+handleIncomingAcks - number of acks to process = 3 
+handleIncomingAcks - valid acks = 18 
+handleIncomingAcks - number of acks to process = 2 
+handleIncomingAcks - valid acks = 19 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - valid acks = 20 
+-------------------------------------------------------------------------RTT: 25 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames sent out = 25 
+handleOutgoingFrames - Frames sent out = 26 
+handleOutgoingFrames - Frames sent out = 27 
+handleOutgoingFrames - Frames sent out = 28 
+handleIncomingAcks - number of acks to process = 4 
+handleIncomingAcks - nonValid acks = 20 
+handleIncomingAcks - number of acks to process = 3 
+handleIncomingAcks - nonValid acks = 20 
+handleIncomingAcks - number of acks to process = 2 
+FastRetransmission - Frames retransmitted = 21 
+cwnd prior calculation cc_AIMD > FRFT = 3.244828 
+sshresh cc_AIMD > FRFT = 2.000000 
+handleIncomingAcks - nonValid acks = 20 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - nonValid acks = 20 
+-------------------------------------------------------------------------RTT: 26 -------------------------------------------------------------------------
+<RECV_1>:[MSG-22]
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - valid acks = 21 
+-------------------------------------------------------------------------RTT: 27 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames sent out = 29 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - nonValid acks = 21 
+-------------------------------------------------------------------------RTT: 28 -------------------------------------------------------------------------
+-------------------------------------------------------------------------RTT: 29 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 23 
+handleIncomingAcks - number of acks to process = 1 
+LAR = 21 
+ackFrame = 21 
+handleIncomingAcks - nonValid acks = 21 
+-------------------------------------------------------------------------RTT: 30 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 24 
+handleIncomingAcks - number of acks to process = 1 
+LAR = 21 
+ackFrame = 21 
+FastRetransmission - Frames retransmitted = 22 
+cwnd prior calculation cc_SS > FRFT = 1.000000 
+sshresh cc_SS > FRFT = 2.000000 
+handleIncomingAcks - nonValid acks = 21 
+-------------------------------------------------------------------------RTT: 31 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 25 
+handleOutgoingFrames - Frames timedout = 26 
+handleOutgoingFrames - Frames timedout = 27 
+handleOutgoingFrames - Frames timedout = 28 
+handleOutgoingFrames - Frames timedout = 29 
+<RECV_1>:[MSG-23]
+handleIncomingAcks - number of acks to process = 4 
+handleIncomingAcks - valid acks = 22 
+handleIncomingAcks - number of acks to process = 3 
+handleIncomingAcks - nonValid acks = 22 
+handleIncomingAcks - number of acks to process = 2 
+handleIncomingAcks - nonValid acks = 22 
+handleIncomingAcks - number of acks to process = 1 
+FastRetransmission - Frames retransmitted = 23 
+cwnd prior calculation cc_AIMD > FRFT = 2.000000 
+sshresh cc_AIMD > FRFT = 2.000000 
+handleIncomingAcks - nonValid acks = 22 
+-------------------------------------------------------------------------RTT: 32 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames sent out = 30 
+<RECV_1>:[MSG-24]
+handleIncomingAcks - number of acks to process = 2 
+handleIncomingAcks - valid acks = 23 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - nonValid acks = 23 
+-------------------------------------------------------------------------RTT: 33 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames sent out = 31 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - nonValid acks = 23 
+-------------------------------------------------------------------------RTT: 34 -------------------------------------------------------------------------
+-------------------------------------------------------------------------RTT: 35 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 31 
+handleIncomingAcks - number of acks to process = 1 
+LAR = 23 
+ackFrame = 23 
+FastRetransmission - Frames retransmitted = 24 
+cwnd prior calculation cc_SS > FRFT = 1.000000 
+sshresh cc_SS > FRFT = 2.000000 
+handleIncomingAcks - nonValid acks = 23 
+-------------------------------------------------------------------------RTT: 36 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 25 
+handleOutgoingFrames - Frames timedout = 26 
+handleOutgoingFrames - Frames timedout = 27 
+handleOutgoingFrames - Frames timedout = 28 
+handleOutgoingFrames - Frames timedout = 29 
+<RECV_1>:[MSG-25]
+<RECV_1>:[MSG-26]
+<RECV_1>:[MSG-27]
+<RECV_1>:[MSG-28]
+handleIncomingAcks - number of acks to process = 4 
+handleIncomingAcks - valid acks = 24 
+handleIncomingAcks - number of acks to process = 3 
+handleIncomingAcks - valid acks = 25 
+handleIncomingAcks - number of acks to process = 2 
+handleIncomingAcks - valid acks = 26 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - valid acks = 27 
+-------------------------------------------------------------------------RTT: 37 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 30 
+handleOutgoingFrames - Frames sent out = 32 
+handleOutgoingFrames - Frames sent out = 33 
+handleOutgoingFrames - Frames sent out = 34 
+handleIncomingAcks - number of acks to process = 4 
+handleIncomingAcks - nonValid acks = 27 
+handleIncomingAcks - number of acks to process = 3 
+handleIncomingAcks - nonValid acks = 27 
+handleIncomingAcks - number of acks to process = 2 
+FastRetransmission - Frames retransmitted = 28 
+cwnd prior calculation cc_AIMD > FRFT = 3.244828 
+sshresh cc_AIMD > FRFT = 2.000000 
+handleIncomingAcks - nonValid acks = 27 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - nonValid acks = 27 
+-------------------------------------------------------------------------RTT: 38 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames sent out = 35 
+<RECV_1>:[MSG-29]
+handleIncomingAcks - number of acks to process = 2 
+handleIncomingAcks - valid acks = 28 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - nonValid acks = 28 
+-------------------------------------------------------------------------RTT: 39 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames sent out = 36 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - nonValid acks = 28 
+-------------------------------------------------------------------------RTT: 40 -------------------------------------------------------------------------
+-------------------------------------------------------------------------RTT: 41 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 31 
+handleIncomingAcks - number of acks to process = 1 
+LAR = 28 
+ackFrame = 28 
+FastRetransmission - Frames retransmitted = 29 
+cwnd prior calculation cc_SS > FRFT = 1.000000 
+sshresh cc_SS > FRFT = 2.000000 
+handleIncomingAcks - nonValid acks = 28 
+-------------------------------------------------------------------------RTT: 42 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 32 
+handleOutgoingFrames - Frames timedout = 33 
+handleOutgoingFrames - Frames timedout = 34 
+handleOutgoingFrames - Frames timedout = 35 
+handleOutgoingFrames - Frames timedout = 36 
+<RECV_1>:[MSG-30]
+handleIncomingAcks - number of acks to process = 4 
+handleIncomingAcks - valid acks = 29 
+handleIncomingAcks - number of acks to process = 3 
+handleIncomingAcks - nonValid acks = 29 
+handleIncomingAcks - number of acks to process = 2 
+handleIncomingAcks - nonValid acks = 29 
+handleIncomingAcks - number of acks to process = 1 
+FastRetransmission - Frames retransmitted = 30 
+cwnd prior calculation cc_AIMD > FRFT = 2.000000 
+sshresh cc_AIMD > FRFT = 2.000000 
+handleIncomingAcks - nonValid acks = 29 
+-------------------------------------------------------------------------RTT: 43 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames sent out = 37 
+<RECV_1>:[MSG-31]
+handleIncomingAcks - number of acks to process = 2 
+handleIncomingAcks - valid acks = 30 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - nonValid acks = 30 
+-------------------------------------------------------------------------RTT: 44 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames sent out = 38 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - nonValid acks = 30 
+-------------------------------------------------------------------------RTT: 45 -------------------------------------------------------------------------
+-------------------------------------------------------------------------RTT: 46 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 31 
+<RECV_1>:[MSG-32]
+handleIncomingAcks - number of acks to process = 1 
+LAR = 30 
+ackFrame = 31 
+handleIncomingAcks - valid acks = 31 
+-------------------------------------------------------------------------RTT: 47 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 32 
+handleOutgoingFrames - Frames timedout = 33 
+<RECV_1>:[MSG-33]
+<RECV_1>:[MSG-34]
+handleIncomingAcks - number of acks to process = 2 
+LAR = 31 
+ackFrame = 32 
+handleIncomingAcks - valid acks = 32 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - valid acks = 33 
+-------------------------------------------------------------------------RTT: 48 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 34 
+handleOutgoingFrames - Frames timedout = 35 
+handleOutgoingFrames - Frames timedout = 36 
+handleOutgoingFrames - Frames timedout = 37 
+<RECV_1>:[MSG-35]
+<RECV_1>:[MSG-36]
+<RECV_1>:[MSG-37]
+<RECV_1>:[MSG-38]
+handleIncomingAcks - number of acks to process = 4 
+handleIncomingAcks - valid acks = 34 
+handleIncomingAcks - number of acks to process = 3 
+handleIncomingAcks - valid acks = 35 
+handleIncomingAcks - number of acks to process = 2 
+handleIncomingAcks - valid acks = 36 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - valid acks = 37 
+-------------------------------------------------------------------------RTT: 49 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 38 
+handleOutgoingFrames - Frames sent out = 39 
+handleOutgoingFrames - Frames sent out = 40 
+handleOutgoingFrames - Frames sent out = 41 
+handleOutgoingFrames - Frames sent out = 42 
+<RECV_1>:[MSG-39]
+<RECV_1>:[MSG-40]
+<RECV_1>:[MSG-41]
+<RECV_1>:[MSG-42]
+handleIncomingAcks - number of acks to process = 4 
+handleIncomingAcks - valid acks = 38 
+handleIncomingAcks - number of acks to process = 3 
+handleIncomingAcks - valid acks = 39 
+handleIncomingAcks - number of acks to process = 2 
+handleIncomingAcks - valid acks = 40 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - valid acks = 41 
+-------------------------------------------------------------------------RTT: 50 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames sent out = 43 
+handleIncomingAcks - number of acks to process = 1 
+handleIncomingAcks - nonValid acks = 41 
+-------------------------------------------------------------------------RTT: 51 -------------------------------------------------------------------------
+-------------------------------------------------------------------------RTT: 52 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 43 
+handleIncomingAcks - number of acks to process = 1 
+LAR = 41 
+ackFrame = 41 
+handleIncomingAcks - nonValid acks = 41 
+-------------------------------------------------------------------------RTT: 53 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 42 
+<RECV_1>:[MSG-43]
+handleIncomingAcks - number of acks to process = 1 
+LAR = 41 
+ackFrame = 42 
+handleIncomingAcks - valid acks = 42 
+-------------------------------------------------------------------------RTT: 54 -------------------------------------------------------------------------
+-------------------------------------------------------------------------RTT: 55 -------------------------------------------------------------------------
+handleOutgoingFrames - Frames timedout = 43 
+<RECV_1>:[MSG-44]
+handleIncomingAcks - number of acks to process = 1 
+LAR = 42 
+ackFrame = 43 
+handleIncomingAcks - valid acks = 43 
+-------------------------------------------------------------------------RTT: 56 -------------------------------------------------------------------------

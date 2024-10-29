@@ -66,6 +66,9 @@ int main(int argc, char* argv[]) {
     cc_diagnostics = fopen(cc_diagnostics_name, "w+"); 
     fprintf(cc_diagnostics, "rtt,acks_received,dup_acks,state,cwnd,ssthresh,frames_sent,frames_dropped,frames_in_sender_window,timedout_frames\n"); 
 
+
+    sleep(5);
+
     // Run the program until you get the exit signal
     while (1) {
         if (!glb_exit_main) {

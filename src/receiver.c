@@ -43,6 +43,8 @@ void handle_incoming_frames(Host* host) {
             enqueue(host->arrayMinQueue->minQueues[senderSrcId], poppedFrame->seq_num, poppedFrame);
             Node* minNode = getMin(host->arrayMinQueue->minQueues[senderSrcId]);
 
+            printf("frame added to minheap = %d \n", poppedFrame->seq_num);
+
             // minnode doesnt get updated after first loop because its outside the loop
             while (minNode != NULL && seq_num_diff(reciever->LFR, minNode->seqNum) == 1) {
                 Node* NodeFromQueue = popMin(host->arrayMinQueue->minQueues[senderSrcId]);
@@ -53,15 +55,15 @@ void handle_incoming_frames(Host* host) {
                 if (FrameFromMinQueue->remaining_msg_bytes == 0) {
                     printf("<RECV_%d>:[%s]\n", host->id, reciever->messageBuffer);
                     reciever->messageBuffer[0] = '\0';
-                    clearMinQueue(host->arrayMinQueue->minQueues[senderSrcId]);   
+                    // clearMinQueue(host->arrayMinQueue->minQueues[senderSrcId]); 
                 }
                 minNode = getMin(host->arrayMinQueue->minQueues[senderSrcId]);
                 reciever->LFR = FrameFromMinQueue->seq_num;
                 reciever->LAF = reciever->LFR + glb_sysconfig.window_size;
-                // !! culamtive ack not occuring here
-                send_ack(host, reciever->LFR, FrameFromMinQueue);
                 FrameFromMinQueue = NULL;
             }
+            // ! added for culamative ack
+            send_ack(host, reciever->LFR, poppedFrame);
         }
         else {
             send_ack(host, reciever->LFR, poppedFrame);

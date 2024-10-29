@@ -2,16 +2,33 @@
 #include <assert.h>
 #include "switch.h"
 
+void shiftLeft(Host* host) {
+    int j = 0;
+
+    // Move non-NULL slots to the beginning of the array
+    for (int i = 0; i < glb_sysconfig.window_size; i++) {
+        if (host->send_window[i].frame != NULL) {
+            host->send_window[j++] = host->send_window[i];
+        }
+    }
+
+    // Set the remaining slots to NULL
+    while (j < glb_sysconfig.window_size) {
+        host->send_window[j].frame = NULL;
+        host->send_window[j].timeout = NULL;
+        j++;
+    }
+}
 
 void FastRetransmission(Host* host, Frame* frameReference, struct timeval curr_timeval) {
 
     uint8_t senderId = frameReference->src_id;
     RecieverState* reciever = &host->recieverStructure[senderId];
+    CongestionControl* cc = &host->cc[senderId];
     uint8_t ftFrameSeq = (uint8_t) reciever->LAR + 1;
 
     long additional_ts = 0; 
 
-    // ! IS THIS NEEDED?
     if (timeval_usecdiff(&curr_timeval, host->latest_timeout) > 0) {
         memcpy(&curr_timeval, host->latest_timeout, sizeof(struct timeval)); 
     }
@@ -19,114 +36,139 @@ void FastRetransmission(Host* host, Frame* frameReference, struct timeval curr_t
     // find the frame we want to retransmit
     for (int i = 0; i < glb_sysconfig.window_size; i++) {
         // only fast retransmit the last acknowledged frame + 1, then break.
-        if (ftFrameSeq == host->send_window[i].frame->seq_num) {
-            Frame* outgoingFrame = host->send_window[i].frame;
-            Frame* copyOfOutgoingFrame = malloc(sizeof(Frame));
-            assert(copyOfOutgoingFrame);
-            memcpy(copyOfOutgoingFrame, outgoingFrame, sizeof(Frame));
-            ll_append_node(&host->outgoing_frames_head, copyOfOutgoingFrame);
-            struct timeval* next_timeout = malloc(sizeof(struct timeval));
-            memcpy(next_timeout, &curr_timeval, sizeof(struct timeval)); 
-            timeval_usecplus(next_timeout, TIMEOUT_INTERVAL_USEC);
-            host->send_window[i].timeout = next_timeout;
-            break;
+        
+        if (reciever->numSent < (int) cc->cwnd) {
+
+            if (host->send_window[i].frame != NULL && ftFrameSeq == host->send_window[i].frame->seq_num) {
+
+                Frame* outgoingFrame = host->send_window[i].frame;
+                Frame* copyOfOutgoingFrame = malloc(sizeof(Frame));
+                assert(copyOfOutgoingFrame);
+                memcpy(copyOfOutgoingFrame, outgoingFrame, sizeof(Frame));
+                ll_append_node(&host->outgoing_frames_head, copyOfOutgoingFrame);
+                struct timeval* next_timeout = malloc(sizeof(struct timeval));
+                memcpy(next_timeout, &curr_timeval, sizeof(struct timeval)); 
+                timeval_usecplus(next_timeout, TIMEOUT_INTERVAL_USEC);
+                host->send_window[i].timeout = next_timeout;
+                printf("FastRetransmission - Frames retransmitted = %d \n", outgoingFrame->seq_num);
+                break;
+
+            }
         }
     }
-    // ! IS THIS NEEDED?
+
     memcpy(host->latest_timeout, &curr_timeval, sizeof(struct timeval)); 
     timeval_usecplus(host->latest_timeout, additional_ts);
 }
 
 void TCPCongestionControl(Host* host, Frame* ackFrame, struct timeval curr_timeval) {
 
+    // Extract sender ID from the acknowledgment frame
     uint8_t senderId = ackFrame->src_id;
     RecieverState* reciever = &host->recieverStructure[senderId];
     CongestionControl* cc = &host->cc[senderId];
 
-    // printf("enter Congestion Control = %d \n", ackFrame->seq_num);
+    // -----------------------------------------------Slow Start State-------------------------------------------------------------
 
-    printf("congestion control state is = %d \n", cc->state);
-
+    // Slow Start (SS) state
     if (cc->state == cc_SS) {
 
-        printf("in slow start = %d \n", ackFrame->seq_num);
-
         cc->dup_acks = (seq_num_diff(reciever->LAR, ackFrame->seq_num) <= 0) ? (cc->dup_acks + 1) : 0;
 
+        printf("LAR = %d \n", reciever->LAR);
+        printf("ackFrame = %d \n", ackFrame->seq_num);
 
-        // else if review.
-        if (reciever->LAR != ackFrame->seq_num && cc->cwnd <= cc->ssthresh) {
-            // For each successful ack, increase by 1
-            // ! \/
-            // cc->cwnd += cc->cwnd;
-            printf("before cwnd = %f \n", cc->cwnd);
-            cc->cwnd += 1.0;
-            printf("after cwnd = %f \n", cc->cwnd);
-
-            cc->dup_acks = 0;
-
-            // in the case that this final iterations pushes it over the edge, then dont want it to go to aimd and double increment
-            if (cc->cwnd > cc->ssthresh) {
-                cc->state = cc_AIMD;
-                return;
-            }
-        }
-
-        else if (cc->dup_acks >= 3) {
-
-            printf("should not be here \n");
+        // If 3 duplicate ACKs, initiate fast retransmission
+        if (cc->dup_acks >= 3) {
             
             FastRetransmission(host, ackFrame, curr_timeval);
+            printf("cwnd prior calculation cc_SS > FRFT = %f \n", cc->cwnd);
             cc->ssthresh = (cc->cwnd / 2.0 > 2.0) ? (cc->cwnd / 2.0) : 2.0;
-
+            printf("sshresh cc_SS > FRFT = %f \n", cc->ssthresh);
             cc->cwnd = cc->ssthresh + 3.0;
             cc->state = cc_FRFT;
+            printf("state = %d \n", cc->state);
             return;
         }
+        
+        // On new ACK (not duplicate), increase cwnd by 1
+        else if (seq_num_diff(reciever->LAR , ackFrame->seq_num) > 0 && cc->cwnd <= cc->ssthresh) {
+            cc->cwnd += 1.0;
+            cc->dup_acks = 0;
+
+            // Transition to AIMD if cwnd exceeds ssthresh
+            if (cc->cwnd > cc->ssthresh) {
+                cc->state = cc_AIMD;
+                printf("state = %d \n", cc->state);
+                // Exit to avoid double incrementing
+                return;
+            }
+            return;
+        }
+
+
     }
 
+    // ----------------------------------------------AIMD State--------------------------------------------------------------
 
-    // TODO: how do we switch out of this state?
+    // AIMD (Additive Increase Multiplicative Decrease) state
     else if (cc->state == cc_AIMD) {
 
-        // second to last is valid, now cwnd = 9. last ack is dupe, but not mod 3 == 0
-        // enter aimd and it increments dupe again, essentially double counting it.
+        // increment duplicate acks if recieved
         cc->dup_acks = (seq_num_diff(reciever->LAR, ackFrame->seq_num) <= 0) ? (cc->dup_acks + 1) : 0;
 
+        // If 3 duplicate ACKs, initiate fast retransmission
         if (cc->dup_acks >= 3) {
             FastRetransmission(host, ackFrame, curr_timeval);
+            printf("cwnd prior calculation cc_AIMD > FRFT = %f \n", cc->cwnd);
             cc->ssthresh = (cc->cwnd / 2.0 > 2.0) ? (cc->cwnd / 2.0) : 2.0;
-            cc->cwnd = cc->ssthresh + 3;
+            printf("sshresh cc_AIMD > FRFT = %f \n", cc->ssthresh);
+            cc->cwnd = cc->ssthresh + 3.0;
             cc->state = cc_FRFT;
+            printf("ccwnd in aimd = %f \n", cc->cwnd);
+            printf("state = %d \n", cc->state);
+            return;
         }
 
-        else if (cc->cwnd > cc->ssthresh) {
+        // NEW ACK - Additive increase of cwnd if above ssthresh
+        // ! seq_num_diff(reciever->LAR , ackFrame->seq_num) > 0
+        // reciever->LAR != ackFrame->seq_num
+        else if (seq_num_diff(reciever->LAR , ackFrame->seq_num) > 0 && cc->cwnd >= cc->ssthresh) {
             cc->cwnd += (1.0/cc->cwnd);
+            cc->dup_acks = 0;
+            return;
         }
+
+
     }
 
 
+    // ----------------------------------------------FRFT State--------------------------------------------------------------
 
-    // TODO: how do we switch out of this state?
+    // Fast Recovery / Fast Retransmission (FRFT) state
     else if (cc->state == cc_FRFT) {
+
+        printf("cwnd in FRFT = %f \n", cc->cwnd);
         
-        // TODO: should i be incrementing dupAcks here as well?
-        // if dupe, enter here
-        if (seq_num_diff(reciever->LAR , ackFrame->seq_num) <= 0) {
-            // TODO: increment cwnd if space permits, or maybe increment always? Part C of 3.
-            // ! problematic if, unecessary
-            // if (cc->cwnd < glb_sysconfig.window_size) {
+        // On duplicate ACK, increment cwnd
+        //!  seq_num_diff(reciever->LAR , ackFrame->seq_num) <= 0
+        if (reciever->LAR == ackFrame->seq_num) {
             cc->cwnd = cc->cwnd + 1;
-            // }
-            // TODO: 3. part D - Review
+            printf("incrementing cwnd = %f \n", cc->cwnd);
+            return;
         }
+
+        // On new ACK - reset dup_acks, set cwnd to ssthresh, and transition to AIMD
         else {
             cc->dup_acks = 0;
             cc->cwnd = cc->ssthresh;
             cc->state = cc_AIMD;
+            printf("state = %d \n", cc->state);
+            return;
         }
     }
 
+    // Catch-all for undefined states (error handling)
     else {
         printf("ERROR - Entered No State \n");
     }
@@ -147,7 +189,6 @@ struct timeval* host_get_next_expiring_timeval(Host* host) {
     return earliestTimeout;
 }
 
-
 void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
 
     // Num of acks received from each receiver
@@ -163,7 +204,7 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
 
     while (length > 0) {
 
-        printf("length = %d \n", length);
+        printf("handleIncomingAcks - number of acks to process = %d \n", length);
 
         LLnode* currNodeHead = ll_pop_node(&host->incoming_frames_head);
         length = ll_get_length(host->incoming_frames_head);
@@ -183,18 +224,19 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
                 continue;
             }
 
-
-            printf("prior to enter Congestion Control = %d \n", currNodeToFrame->seq_num);
-
             // ! Enter
             TCPCongestionControl(host, currNodeToFrame, curr_timeval);
 
+            // ! ack sender id - ackframe
             int senderSrcId = currNodeToFrame->src_id;
             RecieverState* reciever = &host->recieverStructure[senderSrcId];
             uint8_t CurrSeq = currNodeToFrame->seq_num;
-            
+
+            num_acks_received[senderSrcId]++;
+
             if (seq_num_diff(reciever->LAR , CurrSeq) > 0) { 
                 reciever->LAR = CurrSeq;
+                printf("handleIncomingAcks - valid acks = %d \n", CurrSeq);
                 // num_acks_received[senderSrcId]++;
 
                 for (int i = 0; i < glb_sysconfig.window_size; i++) {
@@ -203,9 +245,12 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
                         host->send_window[i].timeout = NULL;
                     }
                 }
-
-                // shiftLeft(host);
+                shiftLeft(host);
             }  
+            else if (seq_num_diff(reciever->LAR , CurrSeq) <= 0) {
+                num_dup_acks_for_this_rtt[senderSrcId]++;
+                printf("handleIncomingAcks - nonValid acks = %d \n", CurrSeq);
+            }
         }
     }
 
@@ -299,37 +344,36 @@ void handle_timedout_frames(Host* host, struct timeval curr_timeval) {
 
     for (int i = 0; i < glb_sysconfig.window_size; i++) {
 
-        if (host->send_window[i].frame == NULL) {continue; }
+        if (host->send_window[i].frame == NULL || host->send_window[i].timeout == NULL) {continue; }
 
-        uint8_t senderId = host->send_window[i].frame->src_id;
-        CongestionControl* cc = &host->cc[senderId];
-
+        // ! sender outgoing to reciever, therefore get reciever id and update their values
+        uint8_t dstId = host->send_window[i].frame->dst_id;
+        CongestionControl* cc = &host->cc[dstId];
 
         if ( host->send_window[i].frame != NULL && host->send_window[i].timeout != NULL) {
             struct timeval* ithFrameTimeout = host->send_window[i].timeout;
             // look for timedout Frames
             if (timeval_usecdiff(ithFrameTimeout, &curr_timeval) >= 0) {
-                printf("timed out = %d \n", host->send_window[i].frame->seq_num);
-                cc->ssthresh = (cc->cwnd / 2.0);
+                cc->ssthresh = (cc->cwnd / 2.0 > 2.0) ? (cc->cwnd / 2.0) : 2.0;
                 cc->cwnd = 1.0;
                 cc->state = cc_SS;
+                printf("state = %d \n", cc->state);
 
                 for (int j = 0; j < glb_sysconfig.window_size; j++) {
-                    if ( host->send_window[i].frame != NULL) {
-                        host->send_window[i].timeout = NULL;
-                        continue;
+                    if ( host->send_window[j].frame != NULL) {
+                        printf("timing out frames = %d \n", host->send_window[j].frame->seq_num);
+                        host->send_window[j].timeout = NULL;
                     }
                 }
+                // break after experiencing first timeout
                 break;
             }
         }
-
     }
 }
 
 
-// ! modified version for p1b
-// TODO: how to access cc->cwnd in order to have that the value the for loops go by
+// ! modified version
 void handle_outgoing_frames(Host* host, struct timeval curr_timeval) {
 
     long additional_ts = 0; 
@@ -342,19 +386,29 @@ void handle_outgoing_frames(Host* host, struct timeval curr_timeval) {
     for (int i = 0; i < glb_sysconfig.window_size; i++) {
         if (host->send_window[i].frame != NULL && host->send_window[i].timeout == NULL) {
 
-            Frame* outgoingFrame = host->send_window[i].frame;
-            Frame* copyOfOutgoingFrame = malloc(sizeof(Frame));
-            assert(copyOfOutgoingFrame);
-            memcpy(copyOfOutgoingFrame, outgoingFrame, sizeof(Frame));
-            ll_append_node(&host->outgoing_frames_head, copyOfOutgoingFrame);
-            struct timeval* next_timeout = malloc(sizeof(struct timeval));
-            memcpy(next_timeout, &curr_timeval, sizeof(struct timeval)); 
-            timeval_usecplus(next_timeout, TIMEOUT_INTERVAL_USEC);
-            host->send_window[i].timeout = next_timeout;
+            uint8_t dstId = host->send_window[i].frame->dst_id;
+            RecieverState* reciever = &host->recieverStructure[dstId];
+            CongestionControl* cc = &host->cc[dstId];
+
+            if (reciever->numSent < (int) cc->cwnd) {
+
+                reciever->numSent += 1;
+                Frame* outgoingFrame = host->send_window[i].frame;
+                Frame* copyOfOutgoingFrame = malloc(sizeof(Frame));
+                assert(copyOfOutgoingFrame);
+                memcpy(copyOfOutgoingFrame, outgoingFrame, sizeof(Frame));
+                printf("handleOutgoingFrames - resending timedout Frames = %d \n", outgoingFrame->seq_num);
+                ll_append_node(&host->outgoing_frames_head, copyOfOutgoingFrame);
+                struct timeval* next_timeout = malloc(sizeof(struct timeval));
+                memcpy(next_timeout, &curr_timeval, sizeof(struct timeval)); 
+                timeval_usecplus(next_timeout, TIMEOUT_INTERVAL_USEC);
+                host->send_window[i].timeout = next_timeout;
+            }
         }
     }
 
     for (int i = 0; i < glb_sysconfig.window_size && ll_get_length(host->buffered_outframes_head) > 0; i++) {
+        
         if (host->send_window[i].frame == NULL) {
 
             Frame* peekedFrame = (Frame*) ll_peek_node(host->buffered_outframes_head);
@@ -363,25 +417,34 @@ void handle_outgoing_frames(Host* host, struct timeval curr_timeval) {
             RecieverState* reciever = &host->recieverStructure[dstId];
             CongestionControl* cc = &host->cc[dstId];
 
-            if (seq_num_diff(reciever->LAR, reciever->LFS) <= (int) cc->cwnd) {
+            printf("cwnd = %f \n", cc->cwnd);
+            printf("ssthresh = %f \n", cc->ssthresh);
+
+
+            // check number of frames sent in this rtt less than cwnd
+            // send frames
+            if (reciever->numSent < (int) cc->cwnd) {
 
                 LLnode* ll_outframe_node = ll_pop_node(&host->buffered_outframes_head);
                 Frame* outgoing_frame = ll_outframe_node->value;
                 Frame* copyOfOutgoingFrame = malloc(sizeof(Frame));
                 assert(copyOfOutgoingFrame);
                 memcpy(copyOfOutgoingFrame, outgoing_frame, sizeof(Frame));
-                printf("send frame out = %d \n", outgoing_frame->seq_num);
-                reciever->LFS = outgoing_frame->seq_num;
+                reciever->numSent += 1;
                 ll_append_node(&host->outgoing_frames_head, copyOfOutgoingFrame); 
                 struct timeval* next_timeout = malloc(sizeof(struct timeval));
                 memcpy(next_timeout, &curr_timeval, sizeof(struct timeval)); 
                 timeval_usecplus(next_timeout, TIMEOUT_INTERVAL_USEC + additional_ts);
                 additional_ts += 10000;
 
+                printf("handleOutgoingFrames - new Frames sent out = %d \n", outgoing_frame->seq_num);
+
                 host->send_window[i].frame = outgoing_frame;
                 host->send_window[i].timeout = next_timeout;
 
                 free(ll_outframe_node);
+
+                continue;
 
             }
         }
@@ -551,6 +614,8 @@ void run_senders() {
             host->round_trip_num += 1; 
             host->csv_out = 1; 
             
+            printf("-------------------------------------------------------------------------RTT: %d -------------------------------------------------------------------------\n", host->round_trip_num);
+
             // Implement this
             handle_input_cmds(host, curr_timeval); 
             // Implement this
@@ -559,7 +624,19 @@ void run_senders() {
             handle_timedout_frames(host, curr_timeval);
             // Implement this
             handle_outgoing_frames(host, curr_timeval); 
+
+
+
+            for (int i = 0; i < glb_num_hosts; i++) {
+                Host* senderId = &glb_hosts_array[i];
+                for (int j = 0; j < glb_num_hosts; j++) {
+                    RecieverState* reciever = &senderId->recieverStructure[j];
+                    reciever->numSent = 0;
+                }
+            }
+
         }
+
 
         //Check if we are waiting for acks
         for (int j = 0; j < glb_sysconfig.window_size; j++) {
