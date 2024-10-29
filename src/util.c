@@ -35,7 +35,6 @@ void enqueue(MinQueue* queue, uint8_t seqNum, Frame* frame) {
     // Check for duplicate sequence number
     for (int i = 0; i < queue->size; i++) {
         if (queue->array[i]->seqNum == seqNum) {
-            printf("duplicate frame, cant add = %d \n", frame->seq_num);
             return; // Duplicate found, skip insertion
         }
     }

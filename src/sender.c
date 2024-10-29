@@ -185,8 +185,6 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
 
     while (length > 0) {
 
-        printf("handleIncomingAcks - number of acks to process = %d \n", length);
-
         LLnode* currNodeHead = ll_pop_node(&host->incoming_frames_head);
         length = ll_get_length(host->incoming_frames_head);
 
@@ -217,8 +215,6 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
 
             if (seq_num_diff(reciever->LAR , CurrSeq) > 0) { 
                 reciever->LAR = CurrSeq;
-                printf("handleIncomingAcks - valid acks = %d \n", CurrSeq);
-                // num_acks_received[senderSrcId]++;
 
                 for (int i = 0; i < glb_sysconfig.window_size; i++) {
                     if (host->send_window[i].frame != NULL && seq_num_diff(host->send_window[i].frame->seq_num, CurrSeq) >= 0 ) {
@@ -230,7 +226,6 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
             }  
             else if (seq_num_diff(reciever->LAR , CurrSeq) <= 0) {
                 num_dup_acks_for_this_rtt[senderSrcId]++;
-                printf("handleIncomingAcks - nonValid acks = %d \n", CurrSeq);
             }
         }
     }
@@ -241,57 +236,58 @@ void handle_incoming_acks(Host* host, struct timeval curr_timeval) {
 }
 
 void handle_input_cmds(Host* host, struct timeval curr_timeval) {
-
+    
     int input_cmd_length = ll_get_length(host->input_cmdlist_head);
-
+    
     while (input_cmd_length > 0) {
-
         LLnode* ll_input_cmd_node = ll_pop_node(&host->input_cmdlist_head);
         input_cmd_length = ll_get_length(host->input_cmdlist_head);
-
         Cmd* outgoing_cmd = (Cmd*)ll_input_cmd_node->value;
         free(ll_input_cmd_node);
 
-        int msg_length = strlen(outgoing_cmd->message)+1;
+        int msgLength = strlen(outgoing_cmd->message)+1;
 
         int offset = 0;
-        uint16_t remaining_bytes = msg_length;
+        uint16_t bytesRemaining = msgLength;
         int copyUpToBytes = 0;
 
-        while (remaining_bytes > 0) {
+        while (bytesRemaining > 0) {
 
-            if (remaining_bytes < FRAME_PAYLOAD_SIZE) {
-                copyUpToBytes = remaining_bytes;
+            // amount of bytes to copy over
+            copyUpToBytes = (bytesRemaining < FRAME_PAYLOAD_SIZE) ? bytesRemaining : FRAME_PAYLOAD_SIZE -1;
 
-            } else {
-                copyUpToBytes = FRAME_PAYLOAD_SIZE -1;
-            }
+            // create outgoing Frame
+            Frame* outgoingFrame = malloc(sizeof(Frame));
+            assert(outgoingFrame);
 
-            Frame* outgoing_frame = malloc(sizeof(Frame));
-            assert(outgoing_frame);
+            // copy data to frame
+            strncpy(outgoingFrame->data, outgoing_cmd->message + offset, copyUpToBytes);
+            outgoingFrame->data[copyUpToBytes] = '\0'; 
 
-            strncpy(outgoing_frame->data, outgoing_cmd->message + offset, copyUpToBytes);
-            outgoing_frame->data[copyUpToBytes] = '\0'; 
+            // update values
+            outgoingFrame->remaining_msg_bytes = bytesRemaining - copyUpToBytes;
+            outgoingFrame->src_id = outgoing_cmd->src_id;
+            outgoingFrame->dst_id = outgoing_cmd->dst_id;
 
-            outgoing_frame->remaining_msg_bytes = remaining_bytes - copyUpToBytes;
-            outgoing_frame->src_id = outgoing_cmd->src_id;
-            outgoing_frame->dst_id = outgoing_cmd->dst_id;
-
+            // get reciever state
             uint8_t senderDstId = outgoing_cmd->dst_id;
             RecieverState* reciever = &host->recieverStructure[senderDstId];
 
-            outgoing_frame->seq_num = reciever->seqNum;
+            // adjust and update values
+            outgoingFrame->seq_num = reciever->seqNum;
             reciever->seqNum = reciever->seqNum + 1;
+            outgoingFrame->crc_val = 0;
 
-            outgoing_frame->crc_val = 0;
-            char* make_frame_char  = convert_frame_to_char(outgoing_frame);
-            outgoing_frame->crc_val = compute_crc8(make_frame_char);
+            char* make_frame_char  = convert_frame_to_char(outgoingFrame);
+            outgoingFrame->crc_val = compute_crc8(make_frame_char);
             free(make_frame_char);
             
-            ll_append_node(&host->buffered_outframes_head, outgoing_frame);
+            // append to buffered
+            ll_append_node(&host->buffered_outframes_head, outgoingFrame);
 
+            // adjust offset and remaining bytes
             offset += copyUpToBytes;
-            remaining_bytes -= copyUpToBytes;
+            bytesRemaining -= copyUpToBytes;
         }
         free(outgoing_cmd->message);
         free(outgoing_cmd);
@@ -575,8 +571,6 @@ void run_senders() {
         if (incoming_frames_cmds || reached_timeout) {
             host->round_trip_num += 1; 
             host->csv_out = 1; 
-            
-            printf("-------------------------------------------------------------------------RTT: %d -------------------------------------------------------------------------\n", host->round_trip_num);
 
             // Implement this
             handle_input_cmds(host, curr_timeval); 

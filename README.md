@@ -36,3 +36,18 @@ Processes incoming frames for a host. Pops frames from the incoming queue, Valid
 Host.c / common.h / util.c
 
 I have not only minqueue created here, but also a recieverstate, and node for the minqueue. Recieverstate is a old implementation in which i initailzed message buffer unique to each host, but now i basically do that with the minqueue.
+
+
+Part 2.
+
+Started off with creating TCPCongestionControl function, which would be the implementation of the CongestionControl protocol. In this function, I enter states of code depending on which state I am in, updating values depending on circumstances. I call this function right after corrupted ack Frame, i.e. call this function if the frame is a valid frame (doesnt mean its not an dupe ack, just that its valid).
+
+next function, primarily for FRFT state is fastRetransmission. I created this in order to avoid redundant code appearing everywhere. This allows me to easily call for expected frame to be retransmitted.
+
+Next, function that was retweeked is handle timed out frames. All that changed here is that now if a timedout frame is detected, to set the entire sender window to timed out, update cwnd and ssthresh according to congestion protocol, and update cc state to slow start.
+
+For outgoing frames, all that was changed there was update a new value, LFS to track how many frames i sent. by doing this, i can stay below the cwnd requirement allowing me to only send frames that i need to send.
+
+Because of this however, there could be cases where [5,6,7,3,4], which would be problematic since it starts off at the start of the window, i.e. itll send 5,6,7 before 3,4, therefore i created a shiftLeft function that after i recieved a valid non dupe ack, and the window was wiped like this [_,_,_,3,4], that it would shift it left to [3,4,_,_,_] fixing the problem of out of order.
+
+These are all the changes from part 1 to part 2.

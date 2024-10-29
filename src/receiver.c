@@ -32,7 +32,6 @@ void handle_incoming_frames(Host* host) {
 
         // Use CRC and Check for Corruption, if poppedFrame corrupted, Destroy and continue to next iteration in incoming frames head.
         if (computeCRC != 0) {
-            printf("Reciever - Corrupted frame = %d \n", poppedFrame->seq_num);
             continue;
         } 
         int senderSrcId = poppedFrame->src_id;
@@ -42,8 +41,6 @@ void handle_incoming_frames(Host* host) {
         if ( seq_num_diff(poppedFrame->seq_num, reciever->LFR) < 0 && seq_num_diff(poppedFrame->seq_num, reciever->LAF) >= 0) {
             enqueue(host->arrayMinQueue->minQueues[senderSrcId], poppedFrame->seq_num, poppedFrame);
             Node* minNode = getMin(host->arrayMinQueue->minQueues[senderSrcId]);
-
-            printf("frame added to minheap = %d \n", poppedFrame->seq_num);
 
             // minnode doesnt get updated after first loop because its outside the loop
             while (minNode != NULL && seq_num_diff(reciever->LFR, minNode->seqNum) == 1) {
