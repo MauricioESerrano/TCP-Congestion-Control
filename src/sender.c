@@ -50,7 +50,6 @@ void FastRetransmission(Host* host, Frame* frameReference, struct timeval curr_t
                 memcpy(next_timeout, &curr_timeval, sizeof(struct timeval)); 
                 timeval_usecplus(next_timeout, TIMEOUT_INTERVAL_USEC);
                 host->send_window[i].timeout = next_timeout;
-                printf("FastRetransmission - Frames retransmitted = %d \n", outgoingFrame->seq_num);
                 break;
 
             }
@@ -75,19 +74,13 @@ void TCPCongestionControl(Host* host, Frame* ackFrame, struct timeval curr_timev
 
         cc->dup_acks = (seq_num_diff(reciever->LAR, ackFrame->seq_num) <= 0) ? (cc->dup_acks + 1) : 0;
 
-        printf("LAR = %d \n", reciever->LAR);
-        printf("ackFrame = %d \n", ackFrame->seq_num);
-
         // If 3 duplicate ACKs, initiate fast retransmission
         if (cc->dup_acks >= 3) {
             
             FastRetransmission(host, ackFrame, curr_timeval);
-            printf("cwnd prior calculation cc_SS > FRFT = %f \n", cc->cwnd);
             cc->ssthresh = (cc->cwnd / 2.0 > 2.0) ? (cc->cwnd / 2.0) : 2.0;
-            printf("sshresh cc_SS > FRFT = %f \n", cc->ssthresh);
             cc->cwnd = cc->ssthresh + 3.0;
             cc->state = cc_FRFT;
-            printf("state = %d \n", cc->state);
             return;
         }
         
@@ -99,7 +92,6 @@ void TCPCongestionControl(Host* host, Frame* ackFrame, struct timeval curr_timev
             // Transition to AIMD if cwnd exceeds ssthresh
             if (cc->cwnd > cc->ssthresh) {
                 cc->state = cc_AIMD;
-                printf("state = %d \n", cc->state);
                 // Exit to avoid double incrementing
                 return;
             }
@@ -120,19 +112,13 @@ void TCPCongestionControl(Host* host, Frame* ackFrame, struct timeval curr_timev
         // If 3 duplicate ACKs, initiate fast retransmission
         if (cc->dup_acks >= 3) {
             FastRetransmission(host, ackFrame, curr_timeval);
-            printf("cwnd prior calculation cc_AIMD > FRFT = %f \n", cc->cwnd);
             cc->ssthresh = (cc->cwnd / 2.0 > 2.0) ? (cc->cwnd / 2.0) : 2.0;
-            printf("sshresh cc_AIMD > FRFT = %f \n", cc->ssthresh);
             cc->cwnd = cc->ssthresh + 3.0;
             cc->state = cc_FRFT;
-            printf("ccwnd in aimd = %f \n", cc->cwnd);
-            printf("state = %d \n", cc->state);
             return;
         }
 
         // NEW ACK - Additive increase of cwnd if above ssthresh
-        // ! seq_num_diff(reciever->LAR , ackFrame->seq_num) > 0
-        // reciever->LAR != ackFrame->seq_num
         else if (seq_num_diff(reciever->LAR , ackFrame->seq_num) > 0 && cc->cwnd >= cc->ssthresh) {
             cc->cwnd += (1.0/cc->cwnd);
             cc->dup_acks = 0;
@@ -147,14 +133,10 @@ void TCPCongestionControl(Host* host, Frame* ackFrame, struct timeval curr_timev
 
     // Fast Recovery / Fast Retransmission (FRFT) state
     else if (cc->state == cc_FRFT) {
-
-        printf("cwnd in FRFT = %f \n", cc->cwnd);
         
         // On duplicate ACK, increment cwnd
-        //!  seq_num_diff(reciever->LAR , ackFrame->seq_num) <= 0
         if (reciever->LAR == ackFrame->seq_num) {
             cc->cwnd = cc->cwnd + 1;
-            printf("incrementing cwnd = %f \n", cc->cwnd);
             return;
         }
 
@@ -163,14 +145,13 @@ void TCPCongestionControl(Host* host, Frame* ackFrame, struct timeval curr_timev
             cc->dup_acks = 0;
             cc->cwnd = cc->ssthresh;
             cc->state = cc_AIMD;
-            printf("state = %d \n", cc->state);
             return;
         }
     }
 
     // Catch-all for undefined states (error handling)
     else {
-        printf("ERROR - Entered No State \n");
+        fprintf(stderr, "ERROR - Entered No State \n");
     }
 }
 
@@ -339,14 +320,12 @@ void handle_input_cmds(Host* host, struct timeval curr_timeval) {
 
 
 
-// ! modified version for p1b
+// ! modified version
 void handle_timedout_frames(Host* host, struct timeval curr_timeval) {
 
     for (int i = 0; i < glb_sysconfig.window_size; i++) {
-
         if (host->send_window[i].frame == NULL || host->send_window[i].timeout == NULL) {continue; }
 
-        // ! sender outgoing to reciever, therefore get reciever id and update their values
         uint8_t dstId = host->send_window[i].frame->dst_id;
         CongestionControl* cc = &host->cc[dstId];
 
@@ -357,15 +336,12 @@ void handle_timedout_frames(Host* host, struct timeval curr_timeval) {
                 cc->ssthresh = (cc->cwnd / 2.0 > 2.0) ? (cc->cwnd / 2.0) : 2.0;
                 cc->cwnd = 1.0;
                 cc->state = cc_SS;
-                printf("state = %d \n", cc->state);
 
                 for (int j = 0; j < glb_sysconfig.window_size; j++) {
                     if ( host->send_window[j].frame != NULL) {
-                        printf("timing out frames = %d \n", host->send_window[j].frame->seq_num);
                         host->send_window[j].timeout = NULL;
                     }
                 }
-                // break after experiencing first timeout
                 break;
             }
         }
@@ -382,7 +358,6 @@ void handle_outgoing_frames(Host* host, struct timeval curr_timeval) {
         memcpy(&curr_timeval, host->latest_timeout, sizeof(struct timeval)); 
     }
 
-    // Send out the frames that have timed out(i.e. timeout = NULL)
     for (int i = 0; i < glb_sysconfig.window_size; i++) {
         if (host->send_window[i].frame != NULL && host->send_window[i].timeout == NULL) {
 
@@ -397,7 +372,6 @@ void handle_outgoing_frames(Host* host, struct timeval curr_timeval) {
                 Frame* copyOfOutgoingFrame = malloc(sizeof(Frame));
                 assert(copyOfOutgoingFrame);
                 memcpy(copyOfOutgoingFrame, outgoingFrame, sizeof(Frame));
-                printf("handleOutgoingFrames - resending timedout Frames = %d \n", outgoingFrame->seq_num);
                 ll_append_node(&host->outgoing_frames_head, copyOfOutgoingFrame);
                 struct timeval* next_timeout = malloc(sizeof(struct timeval));
                 memcpy(next_timeout, &curr_timeval, sizeof(struct timeval)); 
@@ -417,12 +391,6 @@ void handle_outgoing_frames(Host* host, struct timeval curr_timeval) {
             RecieverState* reciever = &host->recieverStructure[dstId];
             CongestionControl* cc = &host->cc[dstId];
 
-            printf("cwnd = %f \n", cc->cwnd);
-            printf("ssthresh = %f \n", cc->ssthresh);
-
-
-            // check number of frames sent in this rtt less than cwnd
-            // send frames
             if (reciever->numSent < (int) cc->cwnd) {
 
                 LLnode* ll_outframe_node = ll_pop_node(&host->buffered_outframes_head);
@@ -436,16 +404,10 @@ void handle_outgoing_frames(Host* host, struct timeval curr_timeval) {
                 memcpy(next_timeout, &curr_timeval, sizeof(struct timeval)); 
                 timeval_usecplus(next_timeout, TIMEOUT_INTERVAL_USEC + additional_ts);
                 additional_ts += 10000;
-
-                printf("handleOutgoingFrames - new Frames sent out = %d \n", outgoing_frame->seq_num);
-
                 host->send_window[i].frame = outgoing_frame;
                 host->send_window[i].timeout = next_timeout;
-
                 free(ll_outframe_node);
-
                 continue;
-
             }
         }
     }
