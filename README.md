@@ -1,7 +1,5 @@
 Name: Mauricio Serrano
 
-PID: A17020958
-
 For sender.c
 
 For "host_get_next_expiring_timeval(Host* host)"
