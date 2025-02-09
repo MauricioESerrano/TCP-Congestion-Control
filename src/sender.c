@@ -98,7 +98,6 @@ void TCPCongestionControl(Host* host, Frame* ackFrame, struct timeval curr_timev
             return;
         }
 
-
     }
 
     // ----------------------------------------------AIMD State--------------------------------------------------------------
@@ -313,8 +312,6 @@ void handle_input_cmds(Host* host, struct timeval curr_timeval) {
 // ***----------------------------------------------------------------------------------------------------------------------***
 //                                                           SEPERATION
 // ***----------------------------------------------------------------------------------------------------------------------***
-
-
 
 // ! modified version
 void handle_timedout_frames(Host* host, struct timeval curr_timeval) {

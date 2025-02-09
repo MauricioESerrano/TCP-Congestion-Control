@@ -4,4 +4,5 @@ Available host id(s):
    host_id=0
    host_id=1
    host_id=2
-The program has been successfully closed.
+End Of File Reached
+Input read error
