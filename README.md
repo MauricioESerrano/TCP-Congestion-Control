@@ -1,53 +1,201 @@
-Name: Mauricio Serrano
+# Project: Reliable Transmission and TCP Congestion Control Protocol in C
 
-PID: A17020958
+## Overview
 
-For sender.c
+This project simulates a custom networking protocol using a sliding window mechanism, selective retransmission, and TCP-inspired congestion control — all implemented in C inside a Docker-contained virtual environment. It mimics real-world networking behavior including frame corruption, out-of-order arrival, and packet drops. The system uses a **64-byte MTU**, enforces **frame CRC validation**, and applies **TCP congestion strategies** like Slow Start, AIMD, Fast Retransmit, and Fast Recovery.
 
-For "host_get_next_expiring_timeval(Host* host)"
-This function iterates through the send window of a host to find the earliest timeout value, returning the pointer to the corresponding struct timeval. If no timeouts are present, it returns NULL.
+> This implementation emphasizes robustness, low-level performance control, and precise synchronization between multiple sender and receiver pairs.
 
-For "handle_timedout_frames(Host* host, struct timeval curr_timeval)"
-This function checks the send window for frames that have timed out and resets their timeout values to NULL if they have exceeded the current time. This is used to manage the retransmission of frames that have not been acknowledged in a timely manner.
+---
 
-For "handle_outgoing_frames(Host* host, struct timeval curr_timeval)"
-This function manages the transmission of frames from the send window to the outgoing frames list, setting appropriate timeouts for each frame. It ensures that frames are sent only when their timeout conditions allow and updates the latest timeout for the host.
+## Protocol Architecture
 
-For the most part, functionality for "host_get_next_expiring_timeval(Host* host)", For "handle_timedout_frames(Host* host, struct timeval curr_timeval)", and "handle_outgoing_frames(Host* host, struct timeval curr_timeval)" is quite simple, as the processes that these functions do are short liners.
+### 🔄 Layered Design
 
+| Layer              | Functionality                                                           |
+|--------------------|-------------------------------------------------------------------------|
+| Application Layer  | Message typing and command-line transmission                            |
+| Transport Layer    | Sliding Window Protocol, Congestion Control, Acknowledgment Tracking    |
+| Link Layer         | CRC-8 Error Detection, Frame Construction, Timeout Handling             |
+| Physical Layer     | Simulated in `switch.c`, handles actual frame delivery between hosts     |
 
-Now, 
+---
 
-For "handle_incoming_acks(Host* host, struct timeval curr_timeval)"
-This function processes incoming acknowledgment frames, updating the expected acknowledgment number and removing acknowledged frames from the send window. It also tracks the number of acknowledgments and duplicate acknowledgments received from each sender.
+## Core Features
 
-For "handle_input_cmds(Host* host, struct timeval curr_timeval)"
-This function retrieves commands from the host's input command list, processes them, and splits messages that exceed the FRAME_PAYLOAD_SIZE into multiple frames. It also updates the sequence number for each outgoing frame and calculates their CRC values.
+### 1. Sliding Window Protocol
+- Window size: `glb_sysconfig.window_size` (≤ 8 for Part 1, > 8 for Part 2)
+- Implements:
+  - Selective retransmission
+  - Cumulative ACKs
+  - Sequence number wraparound handling (`seq_num_diff`)
+- Custom frame format with:
+  - 2-byte `remaining_msg_bytes`
+  - 1-byte `src_id`, `dst_id`, `seq_num`, and `crc8`
+- Frames exceeding MTU (64 bytes) are fragmented and reassembled.
 
+### 2. Congestion Control (PA1b)
+- Tracks per-host pair congestion state:
+  - `SS` (Slow Start)
+  - `AIMD` (Additive Increase Multiplicative Decrease)
+  - `FRFT` (Fast Retransmission & Fast Recovery)
+- Implements:
+  - Linear growth above `ssthresh` (AIMD)
+  - Exponential growth below `ssthresh` (Slow Start)
+  - Immediate retransmission after 3 dup ACKs (Fast Retransmission)
+  - cwnd inflation on dup ACKs and recovery to `ssthresh` on valid ACK (Fast Recovery)
+- All state transitions are tracked via a `CongestionControl` struct for each receiver.
 
-For reciever.c
+---
 
-"handle_incoming_frames(Host* host)"
-Sends an acknowledgment frames back to the sender, setting the source and destination IDs, sequence number, and calculating the CRC value before appending it to the host's outgoing frames. I did it this way as the code was quite tedious to look at and repetetitve depending on my iteration that I was doing at the time, therefore I created this for easement of coding structure.
+## 📦 Frame Format
 
-"handle_incoming_frames(Host* host)"
-Processes incoming frames for a host. Pops frames from the incoming queue, Validates them by checking their CRC, Determines if they fall within the receiver's window, Stores valid frames in a buffer, Sends ACKs for received frames and processes them sequentially. I have yet to mention them, but I initialized and created minqueue and stored its implementation in util.c as i found this to be the easiest form of processing the culamative acks.
+| Field                | Bytes | Description                          |
+|---------------------|--------|--------------------------------------|
+| `remaining_msg_bytes` | 2    | Bytes remaining in full message      |
+| `dst_id`            | 1      | Destination Host ID                  |
+| `src_id`            | 1      | Sender Host ID                       |
+| `seq_num`           | 1      | Sequence number of this frame        |
+| `data`              | ~58    | Payload                              |
+| `crc_val`           | 1      | CRC-8 checksum (must be last field)  |
 
-Host.c / common.h / util.c
+---
 
-I have not only minqueue created here, but also a recieverstate, and node for the minqueue. Recieverstate is a old implementation in which i initailzed message buffer unique to each host, but now i basically do that with the minqueue.
+## 🧠 Algorithmic Breakdown
 
+### Host-Side Logic
 
-Part 2.
+#### `handle_input_cmds`
+- Parses command-line messages.
+- Breaks long messages into frames using `FRAME_PAYLOAD_SIZE`.
+- Fills out header, calculates CRC, and stores frames in `buffered_outframes_head`.
 
-Started off with creating TCPCongestionControl function, which would be the implementation of the CongestionControl protocol. In this function, I enter states of code depending on which state I am in, updating values depending on circumstances. I call this function right after corrupted ack Frame, i.e. call this function if the frame is a valid frame (doesnt mean its not an dupe ack, just that its valid).
+#### `handle_outgoing_frames`
+- Sends `min(cwnd, available slots)` frames from buffered queue.
+- Maintains per-frame timeout (`send_window[i].timeout`).
+- Sets gaps of 10ms between timeouts for fairness.
+- Updates `latest_timeout` to prevent timeout misalignment.
 
-next function, primarily for FRFT state is fastRetransmission. I created this in order to avoid redundant code appearing everywhere. This allows me to easily call for expected frame to be retransmitted.
+#### `handle_incoming_acks`
+- Handles incoming ACKs and invokes:
+  - `TCPCongestionControl()` to update congestion state.
+  - Frame cleanup (if ACKed) and duplicate ACK tracking.
+- Shifts `send_window` left after freeing ACKed frames (`shiftLeft`).
 
-Next, function that was retweeked is handle timed out frames. All that changed here is that now if a timedout frame is detected, to set the entire sender window to timed out, update cwnd and ssthresh according to congestion protocol, and update cc state to slow start.
+#### `handle_timedout_frames`
+- On timeout detection, resets **all** frame timeouts.
+- Drops back to Slow Start with:
+  - `ssthresh = cwnd / 2` (min 2)
+  - `cwnd = 1`
+  - `state = cc_SS`
 
-For outgoing frames, all that was changed there was update a new value, LFS to track how many frames i sent. by doing this, i can stay below the cwnd requirement allowing me to only send frames that i need to send.
+#### `FastRetransmission`
+- Resends `LAR + 1` on third dup ACK.
+- Manages `timeout`, increments cwnd (FRFT behavior).
 
-Because of this however, there could be cases where [5,6,7,3,4], which would be problematic since it starts off at the start of the window, i.e. itll send 5,6,7 before 3,4, therefore i created a shiftLeft function that after i recieved a valid non dupe ack, and the window was wiped like this [_,_,_,3,4], that it would shift it left to [3,4,_,_,_] fixing the problem of out of order.
+#### `TCPCongestionControl`
+- State machine for SS, AIMD, FRFT.
+- Correctly increments, shrinks, and transitions `cwnd` per TCP standards.
+- Seamless handling of duplicate vs new ACKs.
+- Ensures `ssthresh` never falls below 2.
 
-These are all the changes from part 1 to part 2.
+---
+
+## 📥 Receiver-Side Logic
+
+### `handle_incoming_frames`
+- Pops incoming frames, validates via CRC.
+- Rejects corrupted frames early.
+- Stores valid frames in a **min-heap** indexed by sequence number (per sender).
+- When the minimum frame is in order (`seq == LFR + 1`), it:
+  - Appends to message buffer,
+  - Checks `remaining_msg_bytes`,
+  - Prints full message via `printf()` on final frame.
+
+### `send_ack`
+- Called after every valid (even duplicate) frame.
+- Cumulative: always ACKs the latest `LFR`.
+
+---
+
+## 📊 Diagnostics Output
+
+CSV diagnostics file (`diagnostics.csv`) logs per-RTT congestion behavior.
+
+| Field                    | Description                            |
+|--------------------------|----------------------------------------|
+| `rtt`                    | Round-trip number                      |
+| `ack_received`           | Valid ACKs received                    |
+| `dup_acks`               | Count of duplicate ACKs received       |
+| `state`                  | Congestion control state               |
+| `cwnd`                   | Congestion window size                 |
+| `ssthresh`               | Slow start threshold                   |
+| `frames_sent`            | Frames sent this RTT                   |
+| `frames_dropped`         | Frames dropped                         |
+| `frames_in_sender_window` | Outstanding unacknowledged frames     |
+| `timedout_frames`        | Timed-out frames awaiting retransmit   |
+
+Run example:
+```bash
+./tritontalk -s 0 -r 2 -p ./test_suite/cc_basic.cfg < long_msg.txt
+```
+
+---
+
+## ⚙️ Min-Heap Buffering (Receiver)
+
+Used in `receiver.c` to hold out-of-order frames efficiently.
+
+### Implementation Notes:
+- Stored in `arrayMinQueue->minQueues[src_id]`
+- Avoids insertion of duplicate `seq_num`
+- Frames are only popped when `seq == LFR + 1`
+- Ensures correct message reassembly even with reordering
+
+### Utility Functions:
+- `enqueue()` – Inserts frame into heap if not duplicate
+- `getMin()` – Peeks at frame with lowest sequence number
+- `popMin()` – Extracts the root of the heap
+- `clearMinQueue()` – Wipes entire heap buffer
+
+The comparison for ordering uses:
+```c
+seq_num_diff(seq1, seq2)
+```
+Which accounts for 8-bit wraparound (0–255) to ensure proper cyclic sequencing.
+
+---
+
+## 🛠 Utility and Support Tools
+
+- CRC-8 implemented via `compute_crc8()` (based on 0x07 polynomial).
+- Timeout handling with:
+  - `timeval_usecdiff()`
+  - `timeval_usecplus()`
+- Circular linked list for buffering (`ll_*` functions).
+- Sequence difference via `seq_num_diff()` for wraparound protection.
+
+---
+
+## 🧼 Clean Code & Safety
+
+- Memory-safe: dynamically allocated frames and timeouts are `free()`d.
+- Timeout spacing ensures deterministic ordering across RTTs.
+- `latest_timeout` tracking ensures old frames don't preempt new ones.
+- Frame sanity checks (`frame_sanity_check()`) prevent out-of-bounds access.
+
+---
+
+## 📌 Known Constraints
+
+- CRC only detects corruption (not corrects it)
+- ACKs always cumulative — no SACK support
+- Each host sends to only one destination per command
+- `minHeap` is custom — no standard heap lib used
+- Receiver window capped at `window_size` frames per sender
+
+---
+
+## 👤 Author
+
+**Name**: Mauricio Serrano  
